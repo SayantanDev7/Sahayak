@@ -158,10 +158,24 @@ export function Auth() {
                 <div className="flex-1 border-b border-white/10"></div>
               </div>
               <div className="flex justify-center gap-4">
-                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={() => window.location.href='/auth/google'}>
+                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
+                  try {
+                    await authService.doGoogleLogin();
+                    navigate('/dashboard');
+                  } catch (err) {
+                    setNotification({ type: 'error', message: err.message });
+                  }
+                }}>
                   <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="w-6 h-6" />
                 </button>
-                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={() => window.location.href='/auth/github'}>
+                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
+                  try {
+                    await authService.doGithubLogin();
+                    navigate('/dashboard');
+                  } catch (err) {
+                    setNotification({ type: 'error', message: err.message });
+                  }
+                }}>
                   <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" className="w-6 h-6" />
                 </button>
               </div>

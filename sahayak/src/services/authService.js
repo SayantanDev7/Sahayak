@@ -1,25 +1,41 @@
+import { 
+  auth, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  signInWithPopup, 
+  googleProvider, 
+  githubProvider,
+  signOut,
+  updateProfile
+} from './firebase';
+
 export const authService = {
   doLogin: async (credentials) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (credentials.email && credentials.password) {
-          resolve({ user: { name: 'User', email: credentials.email }, token: 'mock-token-xyz' });
-        } else {
-          reject(new Error("Email or password missing"));
-        }
-      }, 1500); // simulate network latency
-    });
+    const userCredential = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+    const token = await userCredential.user.getIdToken();
+    return { user: userCredential.user, token };
   },
 
   doSignup: async (userData) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (userData.email && userData.password && userData.name) {
-          resolve({ user: { name: userData.name, email: userData.email }, token: 'mock-token-xyz' });
-        } else {
-          reject(new Error("Missing required fields"));
-        }
-      }, 1500); // simulate network latency
-    });
+    const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
+    await updateProfile(userCredential.user, { displayName: userData.name });
+    const token = await userCredential.user.getIdToken();
+    return { user: userCredential.user, token };
+  },
+
+  doGoogleLogin: async () => {
+    const result = await signInWithPopup(auth, googleProvider);
+    const token = await result.user.getIdToken();
+    return { user: result.user, token };
+  },
+
+  doGithubLogin: async () => {
+    const result = await signInWithPopup(auth, githubProvider);
+    const token = await result.user.getIdToken();
+    return { user: result.user, token };
+  },
+
+  doLogout: async () => {
+    await signOut(auth);
   }
 };

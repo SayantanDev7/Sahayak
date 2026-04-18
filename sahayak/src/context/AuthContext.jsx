@@ -3,49 +3,54 @@ import PropTypes from 'prop-types';
 
 export const AuthContext = createContext(null);
 
+import { auth } from '../services/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { authService } from '../services/authService';
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Mocking an initial session check
   useEffect(() => {
-    const checkSession = async () => {
-      setLoading(true);
-      try {
-        // Mock API call to get current user
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-          setUser(JSON.parse(storedUser));
-        }
-      } catch (error) {
-        console.error("Session check failed", error);
-      } finally {
-        setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const token = await firebaseUser.getIdToken();
+        localStorage.setItem('sahayak_token', token);
+        localStorage.setItem('sahayak_user', JSON.stringify({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL
+        }));
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL
+        });
+      } else {
+        localStorage.removeItem('sahayak_token');
+        localStorage.removeItem('sahayak_user');
+        setUser(null);
       }
-    };
-    checkSession();
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const login = async (credentials) => {
-    // Mock login logic
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (credentials.username && credentials.password) {
-          const fakeUser = { id: 1, name: credentials.username, role: 'citizen' };
-          setUser(fakeUser);
-          localStorage.setItem('user', JSON.stringify(fakeUser));
-          resolve(fakeUser);
-        } else {
-          reject(new Error("Invalid credentials"));
-        }
-      }, 1000);
-    });
+    // This is now handled by authService in the component, 
+    // but we keep it here for context compatibility if needed.
+    return await authService.doLogin(credentials);
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
+  const logout = async () => {
+    try {
+      await authService.doLogout();
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   const value = {

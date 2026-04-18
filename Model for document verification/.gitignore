@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# ML training artifacts
+checkpoints/
+logs/
+uploads/
+test_images/
+*.h5
+
+# Dataset (too large for git — regenerate with: python model.py --mode demo)
+dataset/
+
+# IDE
+.vscode/
+.idea/
+*.swp

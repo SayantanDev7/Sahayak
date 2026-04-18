@@ -1,0 +1,33 @@
+# Sahayak — Root-level .gitignore
+
+# Environment files (contain secrets)
+.env
+*.env.local
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ML artifacts
+Model for document verification/dataset/
+Model for document verification/checkpoints/
+Model for document verification/logs/
+Model for document verification/uploads/
+Model for document verification/test_images/
