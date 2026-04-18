@@ -4,10 +4,12 @@ import Lottie from 'lottie-react';
 import { authService } from '../services/authService';
 import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 import '../styles/Auth.css';
+import { useLanguage } from '../context/LanguageContext';
 
 const LottieCustom = Lottie.default || Lottie;
 
 export function Auth() {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [isRightPanelActive, setIsRightPanelActive] = useState(false);
   const [blobData, setBlobData] = useState(null);
@@ -48,7 +50,7 @@ export function Auth() {
     try {
       await authService.doSignup(signupData);
       setIsRightPanelActive(false);
-      setNotification({ type: 'success', message: 'Account ban gaya! Ab login karein.' });
+      setNotification({ type: 'success', message: t.auth.signupSuccess });
     } catch (err) {
       setNotification({ type: 'error', message: err.message || 'Signup failed' });
     } finally {
@@ -173,32 +175,32 @@ export function Auth() {
             {/* Left Overlay Content (Shown when active / signing up) */}
             <div className="auth-overlay-panel auth-overlay-left">
               <h1 className="text-4xl font-black uppercase tracking-tighter text-black mb-4" style={{ WebkitTextStroke: '0.5px currentColor' }}>
-                SAHAYAK
+                {t.appName}
               </h1>
               <p className="text-black/80 font-bold text-lg mb-8">
-                Welcome back! Sarkari Suvidhaon se Judein and access your dashboard.
+                {t.auth.welcomeBack}
               </p>
               <button 
                 onClick={() => setIsRightPanelActive(false)}
                 className="border-2 border-black text-black px-10 py-3 rounded-lg font-bold text-lg hover:bg-black hover:text-[#ccff00] transition-all"
               >
-                Sign In
+                {t.auth.signInBtn}
               </button>
             </div>
 
             {/* Right Overlay Content (Shown when NOT active / signing in) */}
             <div className="auth-overlay-panel auth-overlay-right">
               <h1 className="text-4xl font-black uppercase tracking-tighter text-black mb-4" style={{ WebkitTextStroke: '0.5px currentColor' }}>
-                SAHAYAK
+                {t.appName}
               </h1>
               <p className="text-black/80 font-bold text-lg mb-8">
-                New here? Sarkari Suvidhaon se Judein by creating a free account.
+                {t.auth.newHere}
               </p>
               <button 
                 onClick={() => setIsRightPanelActive(true)}
                 className="border-2 border-black text-black px-10 py-3 rounded-lg font-bold text-lg hover:bg-black hover:text-[#ccff00] transition-all"
               >
-                Sign Up
+                {t.auth.signUpBtn}
               </button>
             </div>
           </div>

@@ -5,8 +5,10 @@ import { ApplicationTracker } from '../components/ApplicationTracker';
 import { useApplication } from '../hooks/useApplication';
 import { motion } from 'framer-motion';
 import { ArrowRight, FileCheck, FileClock, FileX, Compass, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export function UserHub() {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const {
     progressData,
@@ -30,16 +32,16 @@ export function UserHub() {
       {/* Page Header */}
       <div className="text-center">
         <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>
-          Mera <span className="text-[#ccff00]">Dashboard</span>
+          {t.userHub.title.split(' ')[0]} <span className="text-[#ccff00]">{t.userHub.title.split(' ').slice(1).join(' ')}</span>
         </h1>
-        <p className="text-lg text-gray-500 mt-2">Aapki sabhi applications ek jagah</p>
+        <p className="text-lg text-gray-500 mt-2">{t.userHub.subtitle}</p>
       </div>
 
       {/* SECTION A: Active Application / Meri Pragati */}
       <section aria-labelledby="meri-pragati">
         <h2 id="meri-pragati" className="text-2xl font-bold mb-6 text-gray-300 tracking-tight flex items-center gap-2">
           <Sparkles className="w-6 h-6 text-[#ccff00]" />
-          Meri Pragati (My Progress)
+          {t.userHub.pragati}
         </h2>
         
         {hasActiveApp ? (
@@ -50,7 +52,7 @@ export function UserHub() {
             >
               <div className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-white/20 transition-all h-full">
                 <h3 className="text-2xl font-bold mb-6 text-center text-[#ccff00] line-clamp-1">
-                  {progressData.title}
+                  {t.schemeTitles[progressData.title] || progressData.title}
                 </h3>
 
                 <CircularProgress progress={appProgress} size={160} strokeWidth={12} />
@@ -60,18 +62,18 @@ export function UserHub() {
                   <div className="flex flex-col items-center">
                     <FileCheck className="w-5 h-5 text-green-400 mb-1" />
                     <span className="text-2xl font-bold text-white">{uploadedDocs}</span>
-                    <span className="text-xs text-gray-500">Done</span>
+                    <span className="text-xs text-gray-500">{t.userHub.done}</span>
                   </div>
                   <div className="flex flex-col items-center">
                     <FileClock className="w-5 h-5 text-yellow-400 mb-1" />
                     <span className="text-2xl font-bold text-white">{pendingDocs}</span>
-                    <span className="text-xs text-gray-500">Pending</span>
+                    <span className="text-xs text-gray-500">{t.userHub.pending}</span>
                   </div>
                   {rejectedDocs > 0 && (
                     <div className="flex flex-col items-center">
                       <FileX className="w-5 h-5 text-red-400 mb-1" />
                       <span className="text-2xl font-bold text-white">{rejectedDocs}</span>
-                      <span className="text-xs text-gray-500">Rejected</span>
+                      <span className="text-xs text-gray-500">{t.userHub.rejected}</span>
                     </div>
                   )}
                 </div>
@@ -80,7 +82,7 @@ export function UserHub() {
                 {isComplete ? (
                   <div className="mt-6 w-full text-center py-4 px-6 rounded-lg bg-green-500/10 border border-green-500/30">
                     <p className="text-lg font-bold text-green-400">
-                      ✅ Sabhi dastavez upload ho chuke hain!
+                      {t.userHub.allUploaded}
                     </p>
                   </div>
                 ) : (
@@ -88,7 +90,7 @@ export function UserHub() {
                     className="mt-6 w-full py-4 px-6 text-xl font-bold bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-all active:scale-95 flex items-center justify-center gap-2" 
                     onClick={resumeApplication}
                   >
-                    Yahan se shuru karein <ArrowRight className="w-5 h-5" />
+                    {t.userHub.startHere} <ArrowRight className="w-5 h-5" />
                   </button>
                 )}
 
@@ -103,9 +105,9 @@ export function UserHub() {
                         'bg-white/5 text-gray-400'
                       }`}
                     >
-                      <span className="font-medium">Doc {idx + 1}: {doc.file || 'Not uploaded'}</span>
+                      <span className="font-medium">{t.userHub.docLabel} {idx + 1}: {doc.file || t.userHub.notUploaded}</span>
                       <span className="uppercase text-xs font-bold tracking-wider">
-                        {doc.status === 'uploaded' ? '✅ Done' : doc.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
+                        {doc.status === 'uploaded' ? `✅ ${t.userHub.done}` : doc.status === 'rejected' ? `❌ ${t.userHub.rejected}` : `⏳ ${t.userHub.pending}`}
                       </span>
                     </div>
                   ))}
@@ -118,12 +120,12 @@ export function UserHub() {
           </div>
         ) : (
           <div className="p-10 text-center bg-white/5 border border-dashed border-white/10 backdrop-blur-md rounded-2xl">
-            <p className="text-2xl text-gray-500 mb-4">Koi active application nahi mili.</p>
+            <p className="text-2xl text-gray-500 mb-4">{t.userHub.noApp}</p>
             <button 
               className="py-3 px-8 text-lg font-bold bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-colors"
               onClick={() => navigate('/explore')}
             >
-              Nayi Yojna Khojein
+              {t.userHub.exploreNew}
             </button>
           </div>
         )}
@@ -142,18 +144,18 @@ export function UserHub() {
             <div className="p-6 border-b border-white/10">
               <h2 id="nayi-schemes" className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
                 <Compass className="w-8 h-8 text-[#ccff00]" />
-                Nayi Schemes (Explore)
+                {t.userHub.explore}
               </h2>
             </div>
             <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
               <p className="text-xl text-gray-400">
-                Sarkar ki nayi yojnao ka labh uthayein. Jaaniye aap kis scheme ke liye patra hain — Central aur State dono.
+                {t.userHub.exploreDesc}
               </p>
               <button 
                 className="py-4 px-8 text-xl font-bold shrink-0 bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-all active:scale-95 flex items-center gap-2" 
                 onClick={() => navigate('/explore')}
               >
-                Yojna Khojein <ArrowRight className="w-5 h-5" />
+                {t.userHub.exploreBtn} <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>

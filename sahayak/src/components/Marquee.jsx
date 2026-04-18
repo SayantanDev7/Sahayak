@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Marquee = () => {
-  const text = "TRUSTED BY GOVT. OF INDIA • SECURE DOCUMENT PROCESSING • ZERO MIDDLEMEN • DIRECT BENEFIT TRANSFER • ";
+  const { t } = useLanguage();
+  const text = t.marquee.text;
   
   // Duplicate the text multiple times to ensure the marquee has enough length to loop seamlessly
   const marqueeContent = Array(10).fill(text).join('');

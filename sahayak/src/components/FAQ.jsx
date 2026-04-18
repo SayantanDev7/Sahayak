@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
-const FAQS = [
-  { question: "How does Sahayak match schemes?", answer: "Our system uses advanced AI to analyze your profile and instantly cross-reference it with thousands of state and central databases." },
-  { question: "Is my personal data secure?", answer: "Yes. We employ end-to-end encryption and strictly adhere to data protection guidelines. Your data is never shared with third parties." },
-  { question: "Do I need to pay for this service?", answer: "No, Sahayak is completely free for citizens. Our goal is to make government schemes accessible to everyone." },
-  { question: "Can I apply directly from Sahayak?", answer: "Yes, for supported schemes, our smart document processing allows you to apply with a single click." }
-];
+
 
 export const FAQ = () => {
+  const { t } = useLanguage();
   const [openIndex, setOpenIndex] = useState(null);
 
   const toggleFaq = (index) => {
@@ -29,17 +26,17 @@ export const FAQ = () => {
         
         {/* Left Side */}
         <div className="w-full lg:w-1/2">
-          <h2 className="text-white text-5xl md:text-6xl font-bold leading-tight mb-8">
-            Questions?<br />We've Got Answers
+          <h2 className="text-white text-5xl md:text-6xl font-bold leading-tight mb-8 whitespace-pre-line">
+            {t.faq.title}
           </h2>
           <Link to="/contact" className="bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-[#ccff00] transition-colors mt-4 inline-block">
-            Contact Us ↗
+            {t.faq.contact}
           </Link>
         </div>
 
         {/* Right Side */}
         <div className="w-full lg:w-1/2 flex flex-col gap-4">
-          {FAQS.map((faq, index) => (
+          {t.faq.items.map((faq, index) => (
             <div 
               key={index}
               onClick={() => toggleFaq(index)}

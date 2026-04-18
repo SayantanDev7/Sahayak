@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 import { 
   Tractor, 
   Landmark, 
@@ -37,6 +38,8 @@ const categoryData = [
 ];
 
 export const Categories = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 50 }}
@@ -46,7 +49,7 @@ export const Categories = () => {
       className="w-full py-24 px-8 max-w-7xl mx-auto font-sans bg-[#0a0a0a]"
     >
       <h2 className="text-white text-4xl md:text-5xl font-bold mb-16 text-center leading-tight">
-        Find schemes based on categories
+        {t.categories.title}
       </h2>
 
       <motion.div 
@@ -70,10 +73,10 @@ export const Categories = () => {
                 <IconComponent size={32} className="text-white group-hover:text-[#ccff00] transition-colors" strokeWidth={1.5} />
               </div>
               <p className="text-[#ccff00] text-sm font-bold tracking-wider mb-2">
-                {item.count} Schemes
+                {item.count} {t.categories.schemes}
               </p>
               <h4 className="text-white text-lg font-semibold leading-snug">
-                {item.name}
+                {t.categories.items[index]?.name || item.name}
               </h4>
             </motion.div>
           );

@@ -7,8 +7,10 @@ import { Card, CardHeader, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { CheckCircle2, ChevronLeft } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export function SchemeDetails() {
+  const { t } = useLanguage();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const source = searchParams.get('source') || 'central';
@@ -45,11 +47,11 @@ export function SchemeDetails() {
   }, [id, source, stateId]);
 
   if (loading) {
-    return <div className="text-2xl text-center py-10 font-bold text-[#ccff00] animate-pulse">Jankari load ho rahi hai...</div>;
+    return <div className="text-2xl text-center py-10 font-bold text-[#ccff00] animate-pulse">{t.schemeDetails.loading}</div>;
   }
 
   if (!scheme) {
-    return <div className="text-2xl text-center py-10 text-red-400">Yojna nahi mili (Scheme not found).</div>;
+    return <div className="text-2xl text-center py-10 text-red-400">{t.schemeDetails.notFound}</div>;
   }
 
   // Check if we already started this application
@@ -58,13 +60,31 @@ export function SchemeDetails() {
   // Transform docs into the format ProgressContext expects internally if needed, or simply handle them by index/name
   const docsStatus = isActiveApp ? progressData.documents : scheme.docs.map((d, idx) => ({ id: `doc_${idx}`, status: 'pending' }));
 
+  // Helper to translate criteria like "Target Group: OBC/EBC"
+  const translateCriterion = (criterion) => {
+    if (!criterion.includes(':')) {
+      return t.criteriaKeys[criterion] || criterion;
+    }
+    const [key, value] = criterion.split(':').map(s => s.trim());
+    const translatedKey = t.criteriaKeys[key] || key;
+    const translatedValue = t.criteriaKeys[value] || value;
+    return `${translatedKey}: ${translatedValue}`;
+  };
+
+  // Helper to translate document names
+  const translateDoc = (docName) => {
+    return t.commonDocs[docName] || docName;
+  };
+
+  const schemeTitle = t.schemeTitles[scheme.title] || scheme.title;
+
   const handleStart = () => {
     // startApplication expects { id, title, requirements: [{id, label}] }
     // We map our new schema to what ProgressContext currently expects:
     startApplication({
       id: scheme.id,
-      title: scheme.title,
-      requirements: scheme.docs.map((doc, idx) => ({ id: `doc_${idx}`, label: doc }))
+      title: schemeTitle,
+      requirements: scheme.docs.map((doc, idx) => ({ id: `doc_${idx}`, label: translateDoc(doc) }))
     });
   };
 
@@ -80,28 +100,28 @@ export function SchemeDetails() {
         onClick={() => navigate('/explore')}
         className="flex items-center gap-2 text-xl py-2 px-4 text-gray-300 bg-white/5 border-white/20 hover:bg-white/10 hover:text-white transition-colors"
       >
-        <ChevronLeft className="w-6 h-6" /> Peeche Jayein
+        <ChevronLeft className="w-6 h-6" /> {t.schemeDetails.back}
       </Button>
 
       <Card className="border-t-4 bg-white/5 border border-white/10 backdrop-blur-md" style={{ borderTopColor: '#ccff00' }}>
         <CardHeader>
           <h1 className="text-4xl font-black uppercase tracking-tighter text-white">
-            {scheme.title}
+            {schemeTitle}
           </h1>
-          <p className="text-2xl mt-2 text-[#ccff00]">Labh: {scheme.benefit}</p>
+          <p className="text-2xl mt-2 text-[#ccff00]">{t.schemeDetails.benefit} {scheme.benefit}</p>
         </CardHeader>
       </Card>
 
       <section aria-labelledby="eligibility-table">
         <h2 id="eligibility-table" className="text-3xl font-bold mb-4 text-white">
-          Patrata (Eligibility)
+          {t.schemeDetails.eligibility}
         </h2>
         <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden shadow-sm backdrop-blur-md">
           <table className="w-full text-left border-collapse">
             <tbody>
               {scheme.eligibility.map((criterion, index) => (
                 <tr key={index} className={`border-b border-white/10 ${index % 2 === 0 ? 'bg-black/20' : 'bg-transparent'}`}>
-                  <td className="p-5 text-xl font-medium text-gray-200">{criterion}</td>
+                  <td className="p-5 text-xl font-medium text-gray-200">{translateCriterion(criterion)}</td>
                   <td className="p-5 flex justify-end">
                     <CheckCircle2 className="w-8 h-8 text-[#ccff00]" />
                   </td>
@@ -114,7 +134,7 @@ export function SchemeDetails() {
 
       <section aria-labelledby="document-checklist">
         <h2 id="document-checklist" className="text-3xl font-bold mb-4 text-white">
-          Dastavez (Documents Required)
+          {t.schemeDetails.docs}
         </h2>
 
         {!isActiveApp && (
@@ -123,7 +143,7 @@ export function SchemeDetails() {
               className="py-4 px-8 text-2xl font-bold w-full md:w-auto transition-all hover:scale-105 text-black bg-[#ccff00] hover:bg-[#aacc00]"
               onClick={handleStart}
             >
-              Abhi Apply Karein
+              {t.schemeDetails.applyNow}
             </Button>
           </div>
         )}
@@ -134,6 +154,7 @@ export function SchemeDetails() {
             const docStatusObj = docsStatus?.find(d => d.id === reqId);
             const isUploaded = docStatusObj?.status === 'uploaded';
             const isActiveUpload = activeDocIndex === idx;
+            const translatedDocName = translateDoc(docName);
 
             return (
               <motion.div
@@ -150,11 +171,11 @@ export function SchemeDetails() {
                   <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
                       <h3 className="text-2xl font-bold text-white flex items-center gap-2">
-                        {docName}
+                        {translatedDocName}
                         {isUploaded && <CheckCircle2 className="w-6 h-6 text-green-500" />}
                       </h3>
                       <p className="text-lg mt-1 text-gray-400">
-                        Zaroori: {scheme.reqs.format} (Max size: {scheme.reqs.size})
+                        {t.schemeDetails.required} {scheme.reqs.format} {t.schemeDetails.maxSize} {scheme.reqs.size})
                       </p>
                     </div>
 
@@ -164,7 +185,7 @@ export function SchemeDetails() {
                         onClick={() => setActiveDocIndex(isActiveUpload ? null : idx)}
                         className={`text-xl py-2 px-6 ${isActiveUpload ? 'text-black bg-[#ccff00] hover:bg-[#aacc00] border-none' : 'text-gray-300 border-white/20 hover:bg-white/10 hover:text-white'}`}
                       >
-                        {isActiveUpload ? 'Band Karein' : 'Upload karein'}
+                        {isActiveUpload ? t.schemeDetails.close : t.schemeDetails.upload}
                       </Button>
                     )}
                   </div>
@@ -172,7 +193,7 @@ export function SchemeDetails() {
                   {isActiveUpload && (
                     <div className="mt-6 pt-6 border-t border-white/10">
                       <SmartStepper 
-                        requirementDetails={`Hum isko ${scheme.reqs.format} mein convert karenge. (${scheme.reqs.size} se chota hona chahiye)`} 
+                        requirementDetails={`${t.schemeDetails.convert1} ${scheme.reqs.format} ${t.schemeDetails.convert2}${scheme.reqs.size} ${t.schemeDetails.convert3}`} 
                         reqId={reqId}
                         onSuccess={() => setActiveDocIndex(null)}
                       />

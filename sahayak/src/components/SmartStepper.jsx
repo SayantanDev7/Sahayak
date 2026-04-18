@@ -5,6 +5,7 @@ import { UploadCloud, FileType, CheckCircle, Loader2, XCircle, Brain } from 'luc
 import { uploadDocument as mockUploadDoc } from '../services/docService';
 import { verifyDocument } from '../services/aiService';
 import { useProgress } from '../hooks/useProgress';
+import { useLanguage } from '../context/LanguageContext';
 
 const STEPS = {
   IDLE: 'idle',
@@ -16,6 +17,7 @@ const STEPS = {
 };
 
 export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
+  const { t } = useLanguage();
   const [step, setStep] = useState(STEPS.IDLE);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -92,10 +94,10 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
       <div className="mb-3">
         <p className="text-lg font-bold flex items-center gap-2 text-gray-300">
           <FileType className="w-5 h-5 text-[#ccff00]" />
-          Nirdesh (Instructions)
+          {t.smartStepper.instructions}
         </p>
         <p className="text-base text-gray-500">
-          {requirementDetails || 'Upload your Aadhaar, PAN, or other ID.'}
+          {requirementDetails || t.smartStepper.defaultRequirement}
         </p>
       </div>
 
@@ -133,17 +135,17 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               </div>
               <div>
                 <p className="text-xl font-bold text-white">
-                  Aap photo khicho, size hum theek karenge
+                  {t.smartStepper.idleTitle}
                 </p>
                 <p className="text-base text-gray-500 mt-1">
-                  Click here to begin upload
+                  {t.smartStepper.idleSubtitle}
                 </p>
               </div>
               <button
                 className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
                 onClick={(e) => { e.stopPropagation(); handleFileClick(); }}
               >
-                File Chune
+                {t.smartStepper.chooseFile}
               </button>
             </motion.div>
           )}
@@ -160,7 +162,7 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               <Loader2 className="w-12 h-12 animate-spin text-[#ccff00]" />
               <div className="text-center">
                 <h3 className="text-xl font-bold text-white">
-                  Uploading...
+                  {t.smartStepper.uploading}
                 </h3>
                 <p className="text-base text-gray-500 mt-1 truncate max-w-xs mx-auto">{file?.name}</p>
               </div>
@@ -192,10 +194,10 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               </motion.div>
               <div className="text-center">
                 <h3 className="text-xl font-bold text-white">
-                  AI Verification in Progress...
+                  {t.smartStepper.aiVerifying}
                 </h3>
                 <p className="text-base text-gray-500 mt-1">
-                  TensorFlow model aapka document check kar raha hai
+                  {t.smartStepper.aiSubtitle}
                 </p>
               </div>
               <motion.div
@@ -224,10 +226,10 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               </div>
               <div className="text-center">
                 <h3 className="text-xl font-bold text-green-400">
-                  Verified ✅
+                  {t.smartStepper.verified}
                 </h3>
                 <p className="text-base text-gray-400 mt-1">
-                  {aiResult?.message || 'Document verified successfully'}
+                  {aiResult?.message || t.smartStepper.verifiedDefault}
                 </p>
                 <p className="text-sm text-gray-600 mt-1">
                   {file?.name}
@@ -237,7 +239,7 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
                 className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
                 onClick={(e) => { e.stopPropagation(); resetStepper(); }}
               >
-                Upload Another File
+                {t.smartStepper.uploadAnother}
               </button>
             </motion.div>
           )}
@@ -256,17 +258,17 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               </div>
               <div className="text-center">
                 <h3 className="text-xl font-bold text-red-400">
-                  Re-upload Needed ❌
+                  {t.smartStepper.reuploadNeeded}
                 </h3>
                 <p className="text-base text-gray-400 mt-1">
-                  {aiResult?.message || 'Document validation failed'}
+                  {aiResult?.message || t.smartStepper.rejectedDefault}
                 </p>
               </div>
               <button
                 className="text-base py-2 px-6 rounded-lg font-bold bg-[#ccff00] text-black hover:bg-[#aacc00] transition-colors"
                 onClick={(e) => { e.stopPropagation(); resetStepper(); }}
               >
-                Firse Upload Karein
+                {t.smartStepper.tryAgain}
               </button>
             </motion.div>
           )}
@@ -285,17 +287,17 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
               </div>
               <div className="text-center">
                 <h3 className="text-xl font-bold text-red-400">
-                  Upload Failed
+                  {t.smartStepper.uploadFailed}
                 </h3>
                 <p className="text-base text-gray-400 mt-1">
-                  Network error — kripya dubara try karein.
+                  {t.smartStepper.networkError}
                 </p>
               </div>
               <button
                 className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
                 onClick={(e) => { e.stopPropagation(); resetStepper(); }}
               >
-                Firse Try Karein
+                {t.smartStepper.retryUpload}
               </button>
             </motion.div>
           )}

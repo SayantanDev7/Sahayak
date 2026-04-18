@@ -1,12 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Search, CheckCircle } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export const HowItWorks = () => {
+  const { t } = useLanguage();
+
   const steps = [
-    { icon: FileText, title: "Enter Details", desc: "Start by entering your basic details to find schemes." },
-    { icon: Search, title: "Search", desc: "Our engine will filter out the best schemes for you." },
-    { icon: CheckCircle, title: "Select & Apply", desc: "Choose your scheme and easily apply online." }
+    { icon: FileText, title: t.howItWorks.steps[0].title, desc: t.howItWorks.steps[0].desc },
+    { icon: Search, title: t.howItWorks.steps[1].title, desc: t.howItWorks.steps[1].desc },
+    { icon: CheckCircle, title: t.howItWorks.steps[2].title, desc: t.howItWorks.steps[2].desc }
   ];
 
   return (
@@ -18,7 +21,7 @@ export const HowItWorks = () => {
       className="bg-[#f8fafc] py-20 flex flex-col items-center px-4 font-sans w-full"
     >
       <h2 className="text-4xl font-extrabold text-black mb-16 text-center">
-        Easy steps to apply for Government Schemes
+        {t.howItWorks.title}
       </h2>
       <div className="flex flex-col md:flex-row gap-8">
         {steps.map((step, index) => {
