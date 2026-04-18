@@ -35,6 +35,14 @@ export const Navbar = () => {
         >
           My Dashboard
         </NavLink>
+        <NavLink 
+          to="/contact" 
+          className={({ isActive }) => 
+            `text-sm font-medium transition-colors ${isActive ? 'text-[#ccff00]' : 'text-gray-300 hover:text-[#ccff00]'}`
+          }
+        >
+          Contact Us
+        </NavLink>
       </div>
 
       <div>

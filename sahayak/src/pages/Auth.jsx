@@ -25,20 +25,20 @@ export function Auth() {
   };
 
   return (
-    <div className="flex justify-center items-center py-12 px-4">
-      <Card className="w-full max-w-md shadow-lg border-2" style={{ borderColor: '#FF9933' }}>
+    <div className="flex justify-center items-center py-12 px-4 font-sans text-white">
+      <Card className="w-full max-w-md bg-white/5 border border-white/10 backdrop-blur-md">
         <CardHeader className="text-center">
-          <h2 className="text-3xl font-bold" style={{ color: '#000080' }}>
-            Sahayak Login
+          <h2 className="text-3xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>
+            Sahayak <span className="text-[#ccff00]">Login</span>
           </h2>
-          <p className="text-xl text-gray-700 mt-2">
+          <p className="text-xl text-gray-400 mt-2">
             Apna mobile number darj karein
           </p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
-              <label htmlFor="phone" className="block text-xl font-medium text-gray-800 mb-2">
+              <label htmlFor="phone" className="block text-xl font-bold text-gray-300 mb-2">
                 Mobile Number (Phone)
               </label>
               <input
@@ -47,15 +47,13 @@ export function Auth() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Ex. 9876543210"
-                className="w-full px-4 py-3 text-xl border-2 rounded-lg focus:outline-none focus:ring-4 transition-all"
-                style={{ borderColor: '#FF9933', focusRingColor: '#FF9933' }}
+                className="w-full px-4 py-3 text-xl bg-black/50 text-white border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#ccff00] focus:border-[#ccff00] transition-all"
                 required
               />
             </div>
             <Button
               type="submit"
-              className="w-full py-4 text-xl font-bold text-white transition-opacity"
-              style={{ backgroundColor: '#138808' }}
+              className="w-full py-4 text-xl font-bold text-black bg-[#ccff00] hover:bg-[#aacc00] transition-colors"
               disabled={loading}
             >
               {loading ? 'Kripya Pratiksha Karein...' : 'OTP Bhejein / Login'}

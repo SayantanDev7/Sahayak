@@ -12,7 +12,6 @@ function App() {
         <main className="flex-grow">
           <Mainroutes />
         </main>
-        <Footer />
       </div>
     </ProgressProvider>
   );

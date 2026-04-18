@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const Footer = () => {
   return (
@@ -21,7 +22,7 @@ export const Footer = () => {
             <li className="text-gray-400 hover:text-white cursor-pointer transition-colors">About Us</li>
             <li className="text-gray-400 hover:text-white cursor-pointer transition-colors">Careers</li>
             <li className="text-gray-400 hover:text-white cursor-pointer transition-colors">Blog</li>
-            <li className="text-gray-400 hover:text-white cursor-pointer transition-colors">Contact</li>
+            <li><Link to="/contact" className="text-gray-400 hover:text-white cursor-pointer transition-colors">Contact</Link></li>
           </ul>
         </div>
         <div>
