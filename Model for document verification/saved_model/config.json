@@ -1,0 +1,19 @@
+{
+  "img_height": 224,
+  "img_width": 224,
+  "img_channels": 3,
+  "num_classes": 9,
+  "class_names": [
+    "10th_marksheet",
+    "12th_marksheet",
+    "aadhaar_card",
+    "caste_certificate",
+    "income_certificate",
+    "pan_card",
+    "passport",
+    "student_id",
+    "voter_id"
+  ],
+  "model_path": "saved_model\\document_verification_model.keras",
+  "saved_at": "2026-04-19T00:22:51.944760"
+}
