@@ -38,9 +38,9 @@ export const Nav = () => {
       </div>
 
       <div>
-        <button className="bg-[#ccff00] text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-transform">
+        <Link to="/auth" className="inline-block bg-[#ccff00] text-black px-6 py-2.5 rounded-full font-bold hover:scale-105 transition-transform">
           Sign In ↗
-        </button>
+        </Link>
       </div>
     </nav>
   );
