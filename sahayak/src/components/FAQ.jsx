@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 
 const FAQS = [
@@ -16,7 +18,13 @@ export const FAQ = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto py-24 px-8 font-sans text-white border-t border-white/10 w-full mt-20">
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="max-w-5xl mx-auto py-24 px-8 font-sans text-white border-t border-white/10 w-full mt-20"
+    >
       <div className="flex flex-col lg:flex-row gap-16">
         
         {/* Left Side */}
@@ -24,9 +32,9 @@ export const FAQ = () => {
           <h2 className="text-white text-5xl md:text-6xl font-bold leading-tight mb-8">
             Questions?<br />We've Got Answers
           </h2>
-          <button className="bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-[#ccff00] transition-colors mt-4">
-            Book a free call ↗
-          </button>
+          <Link to="/contact" className="bg-white text-black px-6 py-3 rounded-full font-bold hover:bg-[#ccff00] transition-colors mt-4 inline-block">
+            Contact Us ↗
+          </Link>
         </div>
 
         {/* Right Side */}
@@ -58,6 +66,6 @@ export const FAQ = () => {
         </div>
         
       </div>
-    </div>
+    </motion.div>
   );
 };

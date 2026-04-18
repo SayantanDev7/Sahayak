@@ -1,9 +1,18 @@
 import React from 'react';
 import { ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+const MotionLink = motion(Link);
 
 export const Hero = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden pt-20 font-sans">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden pt-20 font-sans"
+    >
       {/* Background Accents */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#ccff00] opacity-20 blur-[100px] rounded-full -translate-x-1/4 -translate-y-1/4 pointer-events-none"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ccff00] opacity-20 blur-[100px] rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
@@ -29,13 +38,23 @@ export const Hero = () => {
 
       {/* Action Buttons */}
       <div className="flex flex-col sm:flex-row gap-4 z-10">
-        <button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-[#ccff00] transition-colors">
+        <MotionLink 
+          to="/explore" 
+          whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.98 }}
+          className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-[#ccff00] transition-colors inline-block"
+        >
           Explore Schemes
-        </button>
-        <button className="border border-white/30 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-colors backdrop-blur-sm">
-          Watch Video
-        </button>
+        </MotionLink>
+        <motion.button 
+          whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => document.getElementById('process-section')?.scrollIntoView({ behavior: 'smooth' })}
+          className="border border-white/30 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-colors backdrop-blur-sm"
+        >
+          Know More
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 };

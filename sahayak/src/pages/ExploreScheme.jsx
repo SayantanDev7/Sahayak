@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { centralSchemes } from '../data/centralSchemes';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Building2, Map, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const statesList = [
   {
@@ -95,14 +96,21 @@ export function ExploreScheme() {
   }, [selectedState, activeAuthority]);
 
   return (
-    <div className="space-y-10 px-6 py-10 max-w-6xl mx-auto font-sans text-white">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="space-y-10 px-6 py-10 max-w-6xl mx-auto font-sans text-white"
+    >
       <h1 className="text-4xl md:text-5xl font-black text-center uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>
         Yojna Khojein <span className="text-[#ccff00]">(Explore)</span>
       </h1>
 
       {/* Dual-Authority Layout */}
       <div className="grid md:grid-cols-2 gap-6">
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => setActiveAuthority('central')}
           className={`flex flex-col items-center justify-center p-8 rounded-2xl border transition-all backdrop-blur-md ${
             activeAuthority === 'central' ? 'border-[#ccff00] bg-[#ccff00]/10 shadow-[0_0_30px_rgba(204,255,0,0.15)] scale-105' : 'border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:scale-105'
@@ -111,9 +119,11 @@ export function ExploreScheme() {
           <Building2 className={`w-16 h-16 mb-4 ${activeAuthority === 'central' ? 'text-[#ccff00]' : 'text-gray-400'}`} />
           <h2 className="text-3xl font-bold text-white">Central Government</h2>
           <p className="text-xl mt-2 text-gray-400">Kendra Sarkar ki Yojna</p>
-        </button>
+        </motion.button>
 
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+          whileTap={{ scale: 0.98 }}
           onClick={() => setActiveAuthority('state')}
           className={`flex flex-col items-center justify-center p-8 rounded-2xl border transition-all backdrop-blur-md ${
             activeAuthority === 'state' ? 'border-[#ccff00] bg-[#ccff00]/10 shadow-[0_0_30px_rgba(204,255,0,0.15)] scale-105' : 'border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30 hover:scale-105'
@@ -122,7 +132,7 @@ export function ExploreScheme() {
           <Map className={`w-16 h-16 mb-4 ${activeAuthority === 'state' ? 'text-[#ccff00]' : 'text-gray-400'}`} />
           <h2 className="text-3xl font-bold text-white">State Government</h2>
           <p className="text-xl mt-2 text-gray-400">Rajya Sarkar ki Yojna</p>
-        </button>
+        </motion.button>
       </div>
 
       {/* State Selection Grid */}
@@ -131,30 +141,44 @@ export function ExploreScheme() {
           <h3 className="text-2xl font-bold mb-6 text-white tracking-tight">Apna Rajya (State) Chunein:</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {statesList.map(st => (
-              <button
+              <motion.button
                 key={st.id}
+                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedState(st)}
                 className={`py-3 px-2 text-lg font-bold rounded-lg border transition-colors ${
                   selectedState?.id === st.id ? 'bg-[#ccff00] text-black border-[#ccff00]' : 'text-gray-300 bg-black/50 border-white/10 hover:border-white/30 hover:bg-white/5'
                 }`}
               >
                 {st.label}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
       )}
 
       {/* Scheme List Render */}
-      <div className="space-y-6">
+      <motion.div 
+        variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="space-y-6"
+      >
         {!activeAuthority ? (
           <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Kripya upar se (Central / State) chunein.</p>
         ) : loading ? (
           <p className="text-2xl text-center text-[#ccff00] py-10 animate-pulse">Data load ho raha hai...</p>
         ) : schemes.length > 0 ? (
           schemes.map(scheme => (
-            <Card key={scheme.id} className="bg-white/5 border border-white/10 hover:border-white/30 backdrop-blur-md transition-all">
-              <CardContent className="p-6 md:p-8 flex flex-col md:flex-row justify-between md:items-center gap-6">
+            <motion.div
+              key={scheme.id}
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Card className="bg-white/5 border border-white/10 hover:border-white/30 backdrop-blur-md transition-all">
+                <CardContent className="p-6 md:p-8 flex flex-col md:flex-row justify-between md:items-center gap-6">
                 <div>
                   <h2 className="text-3xl font-bold mb-2 text-white">{scheme.title}</h2>
                   <p className="text-xl font-medium text-[#ccff00]">Labh (Benefit): {scheme.benefit}</p>
@@ -166,14 +190,15 @@ export function ExploreScheme() {
                   Patrata Janein <ChevronRight className="w-5 h-5" />
                 </button>
               </CardContent>
-            </Card>
+              </Card>
+            </motion.div>
           ))
         ) : activeAuthority === 'state' && !selectedState ? (
           <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Rajya chunne ke baad yojnaein dikhengi.</p>
         ) : (
           <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Koi yojna nahi mili.</p>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

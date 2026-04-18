@@ -1,47 +1,84 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { 
+  Tractor, 
+  Landmark, 
+  Briefcase, 
+  GraduationCap, 
+  HeartPulse, 
+  Home, 
+  Scale, 
+  Cpu, 
+  Wrench, 
+  Users, 
+  Trophy, 
+  Train, 
+  Map, 
+  Droplet, 
+  Baby 
+} from 'lucide-react';
 
-const CATEGORIES = [
-  { subtitle: "FOR STUDENTS", title: "Vidyalaxmi Education Loan" },
-  { subtitle: "FOR FARMERS", title: "PM Kisan Samman Nidhi" },
-  { subtitle: "HEALTHCARE", title: "Ayushman Bharat Scheme" },
-  { subtitle: "ENTREPRENEURS", title: "Mudra Yojana Startup Fund" }
+const categoryData = [
+  { name: "Agriculture, Rural & Environment", count: "834", icon: Tractor },
+  { name: "Banking, Financial Services and Insurance", count: "326", icon: Landmark },
+  { name: "Business & Entrepreneurship", count: "741", icon: Briefcase },
+  { name: "Education & Learning", count: "1082", icon: GraduationCap },
+  { name: "Health & Wellness", count: "287", icon: HeartPulse },
+  { name: "Housing & Shelter", count: "133", icon: Home },
+  { name: "Public Safety, Law & Justice", count: "33", icon: Scale },
+  { name: "Science, IT & Communications", count: "109", icon: Cpu },
+  { name: "Skills & Employment", count: "395", icon: Wrench },
+  { name: "Social welfare & Empowerment", count: "1432", icon: Users },
+  { name: "Sports & Culture", count: "258", icon: Trophy },
+  { name: "Transport & Infrastructure", count: "99", icon: Train },
+  { name: "Travel & Tourism", count: "97", icon: Map },
+  { name: "Utility & Sanitation", count: "58", icon: Droplet },
+  { name: "Women and Child", count: "464", icon: Baby }
 ];
 
 export const Categories = () => {
   return (
-    <div className="w-full py-24 px-8 max-w-7xl mx-auto font-sans">
-      <h3 className="text-[#ccff00] text-sm font-bold tracking-widest mb-4">
-        WE ARE GREAT AT
-      </h3>
-      <h2 className="text-white text-4xl md:text-5xl font-bold mb-16 max-w-3xl leading-tight">
-        Scheme Discovery & Smart Document Services
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full py-24 px-8 max-w-7xl mx-auto font-sans bg-[#0a0a0a]"
+    >
+      <h2 className="text-white text-4xl md:text-5xl font-bold mb-16 text-center leading-tight">
+        Find schemes based on categories
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {CATEGORIES.map((cat, index) => (
-          <div 
-            key={index}
-            className="bg-[#141414] border border-white/5 rounded-2xl p-8 group hover:border-[#ccff00]/50 transition-colors cursor-pointer relative overflow-hidden min-h-[200px] flex flex-col justify-between"
-          >
-            <div>
-              <p className="text-gray-400 text-sm font-bold tracking-wider mb-3">
-                {cat.subtitle}
+      <motion.div 
+        variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+      >
+        {categoryData.map((item, index) => {
+          const IconComponent = item.icon;
+          return (
+            <motion.div 
+              key={index}
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.98 }}
+              className="bg-[#141414] border border-white/5 rounded-3xl p-6 group cursor-pointer hover:border-[#ccff00]/50 transition-colors flex flex-col items-center text-center"
+            >
+              <div className="bg-white/5 p-4 rounded-full mb-4 group-hover:bg-[#ccff00]/10 transition-colors">
+                <IconComponent size={32} className="text-white group-hover:text-[#ccff00] transition-colors" strokeWidth={1.5} />
+              </div>
+              <p className="text-[#ccff00] text-sm font-bold tracking-wider mb-2">
+                {item.count} Schemes
               </p>
-              <h4 className="text-white text-3xl font-bold max-w-[80%] leading-tight">
-                {cat.title}
+              <h4 className="text-white text-lg font-semibold leading-snug">
+                {item.name}
               </h4>
-            </div>
-            
-            <div className="absolute bottom-8 right-8">
-              <ArrowUpRight 
-                size={40} 
-                className="text-gray-600 group-hover:text-[#ccff00] group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-300" 
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </motion.div>
   );
 };

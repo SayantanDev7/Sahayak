@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { FileText, Search, CheckCircle } from 'lucide-react';
 
 export const HowItWorks = () => {
@@ -9,7 +10,13 @@ export const HowItWorks = () => {
   ];
 
   return (
-    <div className="bg-[#f8fafc] py-20 flex flex-col items-center px-4 font-sans w-full">
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="bg-[#f8fafc] py-20 flex flex-col items-center px-4 font-sans w-full"
+    >
       <h2 className="text-4xl font-extrabold text-black mb-16 text-center">
         Easy steps to apply for Government Schemes
       </h2>
@@ -27,6 +34,6 @@ export const HowItWorks = () => {
           );
         })}
       </div>
-    </div>
+    </motion.div>
   );
 };

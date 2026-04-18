@@ -4,7 +4,14 @@ import { Cpu } from 'lucide-react';
 
 export const Process = () => {
   return (
-    <div className="max-w-7xl mx-auto py-24 px-8 text-white relative font-sans">
+    <motion.div 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      id="process-section" 
+      className="max-w-7xl mx-auto py-24 px-8 text-white relative font-sans"
+    >
       <h3 className="text-[#ccff00] text-sm font-bold tracking-widest mb-4 uppercase">
         Our Process, Your Advantage
       </h3>
@@ -57,6 +64,6 @@ export const Process = () => {
         </div>
 
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -5,13 +5,19 @@ import { ApplicationTracker } from '../components/ApplicationTracker';
 import { useProgress } from '../hooks/useProgress';
 import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
+import { motion } from 'framer-motion';
 
 export function UserHub() {
   const navigate = useNavigate();
   const { progressData } = useProgress();
 
   return (
-    <div className="space-y-12 max-w-6xl mx-auto px-6 py-10 font-sans text-white">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="space-y-12 max-w-6xl mx-auto px-6 py-10 font-sans text-white"
+    >
       {/* SECTION A: Meri Pragati */}
       <section aria-labelledby="meri-pragati">
         <h2 id="meri-pragati" className="text-3xl font-bold mb-6 text-white tracking-tight">
@@ -20,7 +26,10 @@ export function UserHub() {
         
         {progressData ? (
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="flex flex-col items-center justify-center p-6 border border-white/10 bg-white/5 backdrop-blur-md hover:border-white/30 transition-all">
+            <motion.div
+              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+            >
+              <Card className="flex flex-col items-center justify-center p-6 border border-white/10 bg-white/5 backdrop-blur-md hover:border-white/30 transition-all h-full">
               <h3 className="text-2xl font-bold mb-4 line-clamp-1 text-[#ccff00]">
                 {progressData.title}
               </h3>
@@ -34,7 +43,8 @@ export function UserHub() {
               >
                 Yahan se shuru karein
               </Button>
-            </Card>
+              </Card>
+            </motion.div>
 
             <ApplicationTracker />
           </div>
@@ -47,7 +57,14 @@ export function UserHub() {
 
       {/* SECTION B: Nayi Schemes */}
       <section aria-labelledby="nayi-schemes">
-        <Card className="border border-[#ccff00] bg-[#ccff00]/5 backdrop-blur-md hover:bg-[#ccff00]/10 transition-colors">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+        >
+          <Card className="border border-[#ccff00] bg-[#ccff00]/5 backdrop-blur-md hover:bg-[#ccff00]/10 transition-colors">
           <CardHeader>
             <h2 id="nayi-schemes" className="text-3xl font-bold text-white tracking-tight">
               Nayi Schemes (Explore)
@@ -64,8 +81,9 @@ export function UserHub() {
               Yojna Khojein
             </Button>
           </CardContent>
-        </Card>
+          </Card>
+        </motion.div>
       </section>
-    </div>
+    </motion.div>
   );
 }
