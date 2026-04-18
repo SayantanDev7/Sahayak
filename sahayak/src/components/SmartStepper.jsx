@@ -1,18 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence } from 'framer-motion';
-import { UploadCloud, FileType, CheckCircle, Loader2 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from './ui/Card';
-import { Button } from './ui/Button';
+import { UploadCloud, FileType, CheckCircle, Loader2, XCircle, Brain } from 'lucide-react';
 import { uploadDocument as mockUploadDoc } from '../services/docService';
-import { toast } from 'react-toastify';
+import { verifyDocument } from '../services/aiService';
 import { useProgress } from '../hooks/useProgress';
 
 const STEPS = {
   IDLE: 'idle',
-  CHECKING: 'checking',
-  COMPRESSING: 'compressing',
-  SUCCESS: 'success',
+  UPLOADING: 'uploading',
+  VERIFYING_AI: 'verifying_ai',
+  VERIFIED: 'verified',
+  REJECTED: 'rejected',
   ERROR: 'error'
 };
 
@@ -20,20 +19,20 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
   const [step, setStep] = useState(STEPS.IDLE);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(0);
+  const [aiResult, setAiResult] = useState(null);
   const fileInputRef = useRef(null);
   
-  // Safe invoke the hook
   let uploadDocumentToContext = () => {};
+  let markDocRejectedInContext = () => {};
   try {
     const context = useProgress();
-    if(context && context.uploadDocument) {
-      uploadDocumentToContext = context.uploadDocument;
-    }
+    if (context?.uploadDocument) uploadDocumentToContext = context.uploadDocument;
+    if (context?.markDocRejected) markDocRejectedInContext = context.markDocRejected;
   // eslint-disable-next-line no-empty
   } catch (e) {}
 
   const handleFileClick = () => {
-    if (step === STEPS.IDLE || step === STEPS.ERROR) {
+    if (step === STEPS.IDLE || step === STEPS.ERROR || step === STEPS.REJECTED) {
       fileInputRef.current?.click();
     }
   };
@@ -47,37 +46,37 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
   };
 
   const processFile = async (selectedFile) => {
-    setStep(STEPS.CHECKING);
+    // Phase 1: Uploading
+    setStep(STEPS.UPLOADING);
     setProgress(0);
+    setAiResult(null);
 
     const uploadInterval = setInterval(() => {
-      setProgress(p => (p < 95 ? p + 5 : p));
+      setProgress(p => (p < 90 ? p + Math.random() * 8 : p));
     }, 200);
 
     try {
-      // Mock checking compliance state
-      await new Promise(r => setTimeout(r, 1500));
-      setStep(STEPS.COMPRESSING);
-      
-      // Real or mocked upload service
       await mockUploadDoc(selectedFile, { category: 'Document' });
       clearInterval(uploadInterval);
-      
-      setStep(STEPS.SUCCESS);
       setProgress(100);
-      toast.success("Mubarak ho! Aapka document upload ho gaya.");
-      
-      if (reqId) {
-        uploadDocumentToContext(reqId, selectedFile);
-      }
-      
-      if (onSuccess) {
-         setTimeout(onSuccess, 2000);
+
+      // Phase 2: AI Verification
+      setStep(STEPS.VERIFYING_AI);
+
+      const result = await verifyDocument(selectedFile);
+      setAiResult(result);
+
+      if (result.valid) {
+        setStep(STEPS.VERIFIED);
+        if (reqId) uploadDocumentToContext(reqId, selectedFile);
+        if (onSuccess) setTimeout(onSuccess, 2000);
+      } else {
+        setStep(STEPS.REJECTED);
+        if (reqId) markDocRejectedInContext(reqId, result.message);
       }
     } catch (error) {
       clearInterval(uploadInterval);
       setStep(STEPS.ERROR);
-      toast.error(error?.message || "Kuch galat ho gaya.");
     }
   };
 
@@ -85,130 +84,224 @@ export function SmartStepper({ requirementDetails, reqId, onSuccess }) {
     setStep(STEPS.IDLE);
     setFile(null);
     setProgress(0);
-  };
-
-  const getBorderColor = () => {
-    if (step === STEPS.IDLE) return '#FF9933';
-    if (step === STEPS.SUCCESS) return '#138808';
-    if (step === STEPS.ERROR) return '#EF4444'; 
-    return '#E5E7EB';
+    setAiResult(null);
   };
 
   return (
-    <Card className="w-full shadow-none border-none bg-transparent">
-      <CardHeader className="px-0 pt-0">
-        <p className="text-xl font-bold flex items-center gap-2" style={{ color: '#000080' }}>
-          <FileType className="w-6 h-6" style={{ color: '#FF9933' }} />
+    <div className="w-full">
+      <div className="mb-3">
+        <p className="text-lg font-bold flex items-center gap-2 text-gray-300">
+          <FileType className="w-5 h-5 text-[#ccff00]" />
           Nirdesh (Instructions)
         </p>
-        <p className="text-lg text-gray-700 font-medium">
+        <p className="text-base text-gray-500">
           {requirementDetails || 'Upload your Aadhaar, PAN, or other ID.'}
         </p>
-      </CardHeader>
+      </div>
 
-      <CardContent className="px-0 pb-0">
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          className="hidden"
-          accept=".pdf,.jpg,.jpeg,.png"
-        />
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        className="hidden"
+        accept=".pdf,.jpg,.jpeg,.png"
+      />
 
-        <div
-          className="border-4 border-dashed rounded-xl p-8 text-center transition-colors shadow-inner"
-          style={{
-            cursor: step === STEPS.IDLE || step === STEPS.ERROR ? 'pointer' : 'default',
-            borderColor: getBorderColor(),
-            backgroundColor: step === STEPS.IDLE ? '#FFF3E0' : step === STEPS.SUCCESS ? '#e6f4ea' : '#ffffff'
-          }}
-          onClick={handleFileClick}
-        >
-          <AnimatePresence mode="wait">
-            
-            {/* IDLE */}
-            {step === STEPS.IDLE && (
-              <motion.div key="idle" className="flex flex-col items-center space-y-4">
-                <div className="p-5 bg-white rounded-full shadow-sm">
-                  <UploadCloud className="w-12 h-12" style={{ color: '#FF9933' }} />
-                </div>
-                <div>
-                  <p className="text-2xl font-bold" style={{ color: '#000080' }}>
-                    Aap photo khicho, size hum theek karenge
-                  </p>
-                  <p className="text-lg text-gray-500 mt-2">
-                    Click here to begin upload
-                  </p>
-                </div>
-                <Button variant="outline" className="text-lg py-2 px-6" onClick={(e) => { e.stopPropagation(); handleFileClick(); }}>
-                  File Chune
-                </Button>
+      <div
+        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+          step === STEPS.IDLE ? 'border-white/20 bg-white/5 hover:border-[#ccff00]/50 hover:bg-[#ccff00]/5 cursor-pointer' :
+          step === STEPS.VERIFIED ? 'border-green-500/50 bg-green-500/5' :
+          step === STEPS.REJECTED ? 'border-red-500/50 bg-red-500/5 cursor-pointer' :
+          step === STEPS.ERROR ? 'border-red-500/50 bg-red-500/5 cursor-pointer' :
+          'border-white/10 bg-white/5'
+        }`}
+        onClick={handleFileClick}
+      >
+        <AnimatePresence mode="wait">
+          
+          {/* IDLE */}
+          {step === STEPS.IDLE && (
+            <motion.div
+              key="idle"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex flex-col items-center space-y-4"
+            >
+              <div className="p-4 bg-white/10 rounded-full">
+                <UploadCloud className="w-10 h-10 text-[#ccff00]" />
+              </div>
+              <div>
+                <p className="text-xl font-bold text-white">
+                  Aap photo khicho, size hum theek karenge
+                </p>
+                <p className="text-base text-gray-500 mt-1">
+                  Click here to begin upload
+                </p>
+              </div>
+              <button
+                className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                onClick={(e) => { e.stopPropagation(); handleFileClick(); }}
+              >
+                File Chune
+              </button>
+            </motion.div>
+          )}
+
+          {/* UPLOADING */}
+          {step === STEPS.UPLOADING && (
+            <motion.div
+              key="uploading"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex flex-col items-center space-y-5"
+            >
+              <Loader2 className="w-12 h-12 animate-spin text-[#ccff00]" />
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-white">
+                  Uploading...
+                </h3>
+                <p className="text-base text-gray-500 mt-1 truncate max-w-xs mx-auto">{file?.name}</p>
+              </div>
+              <div className="w-full max-w-sm bg-white/10 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full bg-[#ccff00]"
+                  animate={{ width: `${Math.round(progress)}%` }}
+                />
+              </div>
+              <p className="text-sm text-gray-500">{Math.round(progress)}%</p>
+            </motion.div>
+          )}
+
+          {/* AI VERIFICATION */}
+          {step === STEPS.VERIFYING_AI && (
+            <motion.div
+              key="verifying"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="flex flex-col items-center space-y-5"
+            >
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [1, 0.6, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="p-4 bg-purple-500/20 rounded-full"
+              >
+                <Brain className="w-12 h-12 text-purple-400" />
               </motion.div>
-            )}
-
-            {/* PROCESSING (Checking / Compressing) */}
-            {(step === STEPS.CHECKING || step === STEPS.COMPRESSING) && (
-              <motion.div key="processing" className="flex flex-col items-center space-y-6">
-                <Loader2 className="w-16 h-16 animate-spin" style={{ color: '#FF9933' }} />
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold" style={{ color: '#000080' }}>
-                    {step === STEPS.CHECKING ? 'Checking document compliance...' : 'Compressing and converting to format...'}
-                  </h3>
-                  <p className="text-lg text-gray-600 mt-2 line-clamp-1 max-w-xs mx-auto">{file?.name}</p>
-                </div>
-                <div className="w-full max-w-sm bg-gray-200 rounded-full h-3 overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{ backgroundColor: '#FF9933' }}
-                    animate={{ width: `${progress}%` }}
-                  />
-                </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-white">
+                  AI Verification in Progress...
+                </h3>
+                <p className="text-base text-gray-500 mt-1">
+                  TensorFlow model aapka document check kar raha hai
+                </p>
+              </div>
+              <motion.div
+                className="flex gap-2"
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ repeat: Infinity, duration: 1.2 }}
+              >
+                {[0, 1, 2].map(i => (
+                  <div key={i} className="w-3 h-3 rounded-full bg-purple-400" />
+                ))}
               </motion.div>
-            )}
+            </motion.div>
+          )}
 
-            {/* SUCCESS */}
-            {step === STEPS.SUCCESS && (
-              <motion.div key="success" className="flex flex-col items-center space-y-4">
-                <div className="rounded-full p-3 text-white" style={{ backgroundColor: '#138808' }}>
-                  <CheckCircle className="w-12 h-12" />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold" style={{ color: '#138808' }}>
-                    Ready for Submission!
-                  </h3>
-                  <p className="text-lg text-gray-600 mt-1">
-                    {file?.name} uploaded successfully. Preview available.
-                  </p>
-                </div>
-                <Button variant="outline" className="text-lg py-2 px-6" onClick={(e) => { e.stopPropagation(); resetStepper(); }}>
-                  Upload Another File
-                </Button>
-              </motion.div>
-            )}
+          {/* VERIFIED */}
+          {step === STEPS.VERIFIED && (
+            <motion.div
+              key="verified"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center space-y-4"
+            >
+              <div className="rounded-full p-4 bg-green-500/20">
+                <CheckCircle className="w-10 h-10 text-green-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-green-400">
+                  Verified ✅
+                </h3>
+                <p className="text-base text-gray-400 mt-1">
+                  {aiResult?.message || 'Document verified successfully'}
+                </p>
+                <p className="text-sm text-gray-600 mt-1">
+                  {file?.name}
+                </p>
+              </div>
+              <button
+                className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                onClick={(e) => { e.stopPropagation(); resetStepper(); }}
+              >
+                Upload Another File
+              </button>
+            </motion.div>
+          )}
 
-            {/* ERROR */}
-            {step === STEPS.ERROR && (
-              <motion.div key="error" className="flex flex-col items-center space-y-4">
-                <div className="rounded-full p-3 text-white bg-red-600">
-                  <FileType className="w-12 h-12" />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-2xl font-bold text-red-600">
-                    Upload Failed
-                  </h3>
-                  <p className="text-lg text-gray-600 mt-1">
-                    Format ya size niyam anusar nahi hai.
-                  </p>
-                </div>
-                <Button variant="outline" className="text-lg py-2 px-6" onClick={(e) => { e.stopPropagation(); resetStepper(); }}>
-                  Firse Try Karein
-                </Button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </CardContent>
-    </Card>
+          {/* REJECTED */}
+          {step === STEPS.REJECTED && (
+            <motion.div
+              key="rejected"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center space-y-4"
+            >
+              <div className="rounded-full p-4 bg-red-500/20">
+                <XCircle className="w-10 h-10 text-red-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-red-400">
+                  Re-upload Needed ❌
+                </h3>
+                <p className="text-base text-gray-400 mt-1">
+                  {aiResult?.message || 'Document validation failed'}
+                </p>
+              </div>
+              <button
+                className="text-base py-2 px-6 rounded-lg font-bold bg-[#ccff00] text-black hover:bg-[#aacc00] transition-colors"
+                onClick={(e) => { e.stopPropagation(); resetStepper(); }}
+              >
+                Firse Upload Karein
+              </button>
+            </motion.div>
+          )}
+
+          {/* ERROR */}
+          {step === STEPS.ERROR && (
+            <motion.div
+              key="error"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center space-y-4"
+            >
+              <div className="rounded-full p-4 bg-red-500/20">
+                <FileType className="w-10 h-10 text-red-400" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-red-400">
+                  Upload Failed
+                </h3>
+                <p className="text-base text-gray-400 mt-1">
+                  Network error — kripya dubara try karein.
+                </p>
+              </div>
+              <button
+                className="text-base py-2 px-6 rounded-lg font-bold border border-white/20 text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
+                onClick={(e) => { e.stopPropagation(); resetStepper(); }}
+              >
+                Firse Try Karein
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }
 

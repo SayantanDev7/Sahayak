@@ -2,14 +2,23 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '../components/ui/CircularProgress';
 import { ApplicationTracker } from '../components/ApplicationTracker';
-import { useProgress } from '../hooks/useProgress';
-import { Button } from '../components/ui/Button';
-import { Card, CardContent, CardHeader } from '../components/ui/Card';
+import { useApplication } from '../hooks/useApplication';
 import { motion } from 'framer-motion';
+import { ArrowRight, FileCheck, FileClock, FileX, Compass, Sparkles } from 'lucide-react';
 
 export function UserHub() {
   const navigate = useNavigate();
-  const { progressData } = useProgress();
+  const {
+    progressData,
+    appProgress,
+    isComplete,
+    hasActiveApp,
+    totalDocs,
+    uploadedDocs,
+    pendingDocs,
+    rejectedDocs,
+    resumeApplication
+  } = useApplication();
 
   return (
     <motion.div 
@@ -18,44 +27,109 @@ export function UserHub() {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="space-y-12 max-w-6xl mx-auto px-6 py-10 font-sans text-white"
     >
-      {/* SECTION A: Meri Pragati */}
+      {/* Page Header */}
+      <div className="text-center">
+        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>
+          Mera <span className="text-[#ccff00]">Dashboard</span>
+        </h1>
+        <p className="text-lg text-gray-500 mt-2">Aapki sabhi applications ek jagah</p>
+      </div>
+
+      {/* SECTION A: Active Application / Meri Pragati */}
       <section aria-labelledby="meri-pragati">
-        <h2 id="meri-pragati" className="text-3xl font-bold mb-6 text-white tracking-tight">
+        <h2 id="meri-pragati" className="text-2xl font-bold mb-6 text-gray-300 tracking-tight flex items-center gap-2">
+          <Sparkles className="w-6 h-6 text-[#ccff00]" />
           Meri Pragati (My Progress)
         </h2>
         
-        {progressData ? (
+        {hasActiveApp ? (
           <div className="grid md:grid-cols-2 gap-8">
+            {/* Progress Card */}
             <motion.div
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
             >
-              <Card className="flex flex-col items-center justify-center p-6 border border-white/10 bg-white/5 backdrop-blur-md hover:border-white/30 transition-all h-full">
-              <h3 className="text-2xl font-bold mb-4 line-clamp-1 text-[#ccff00]">
-                {progressData.title}
-              </h3>
-              <CircularProgress progress={progressData.progress} size={150} />
-              <p className="text-xl mt-4 text-gray-300 text-center">
-                Dastavez upload baaki hai
-              </p>
-              <Button 
-                className="mt-6 w-full py-4 text-xl font-bold bg-[#ccff00] text-black hover:bg-[#aacc00] transition-colors" 
-                onClick={() => navigate(`/scheme/${progressData.schemeId}`)}
-              >
-                Yahan se shuru karein
-              </Button>
-              </Card>
+              <div className="flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md hover:border-white/20 transition-all h-full">
+                <h3 className="text-2xl font-bold mb-6 text-center text-[#ccff00] line-clamp-1">
+                  {progressData.title}
+                </h3>
+
+                <CircularProgress progress={appProgress} size={160} strokeWidth={12} />
+
+                {/* Doc Stats */}
+                <div className="flex gap-6 mt-6 text-center">
+                  <div className="flex flex-col items-center">
+                    <FileCheck className="w-5 h-5 text-green-400 mb-1" />
+                    <span className="text-2xl font-bold text-white">{uploadedDocs}</span>
+                    <span className="text-xs text-gray-500">Done</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <FileClock className="w-5 h-5 text-yellow-400 mb-1" />
+                    <span className="text-2xl font-bold text-white">{pendingDocs}</span>
+                    <span className="text-xs text-gray-500">Pending</span>
+                  </div>
+                  {rejectedDocs > 0 && (
+                    <div className="flex flex-col items-center">
+                      <FileX className="w-5 h-5 text-red-400 mb-1" />
+                      <span className="text-2xl font-bold text-white">{rejectedDocs}</span>
+                      <span className="text-xs text-gray-500">Rejected</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Resume / Complete Message */}
+                {isComplete ? (
+                  <div className="mt-6 w-full text-center py-4 px-6 rounded-lg bg-green-500/10 border border-green-500/30">
+                    <p className="text-lg font-bold text-green-400">
+                      ✅ Sabhi dastavez upload ho chuke hain!
+                    </p>
+                  </div>
+                ) : (
+                  <button 
+                    className="mt-6 w-full py-4 px-6 text-xl font-bold bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-all active:scale-95 flex items-center justify-center gap-2" 
+                    onClick={resumeApplication}
+                  >
+                    Yahan se shuru karein <ArrowRight className="w-5 h-5" />
+                  </button>
+                )}
+
+                {/* Document breakdown list */}
+                <div className="w-full mt-6 space-y-2">
+                  {progressData.documents.map((doc, idx) => (
+                    <div
+                      key={doc.id}
+                      className={`flex items-center justify-between py-2 px-4 rounded-lg text-sm ${
+                        doc.status === 'uploaded' ? 'bg-green-500/10 text-green-400' :
+                        doc.status === 'rejected' ? 'bg-red-500/10 text-red-400' :
+                        'bg-white/5 text-gray-400'
+                      }`}
+                    >
+                      <span className="font-medium">Doc {idx + 1}: {doc.file || 'Not uploaded'}</span>
+                      <span className="uppercase text-xs font-bold tracking-wider">
+                        {doc.status === 'uploaded' ? '✅ Done' : doc.status === 'rejected' ? '❌ Rejected' : '⏳ Pending'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
 
+            {/* Application Tracker */}
             <ApplicationTracker />
           </div>
         ) : (
-          <Card className="p-8 text-center bg-white/5 border border-white/10 backdrop-blur-md">
-            <p className="text-2xl text-gray-400">Koi active application nahi mili.</p>
-          </Card>
+          <div className="p-10 text-center bg-white/5 border border-dashed border-white/10 backdrop-blur-md rounded-2xl">
+            <p className="text-2xl text-gray-500 mb-4">Koi active application nahi mili.</p>
+            <button 
+              className="py-3 px-8 text-lg font-bold bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-colors"
+              onClick={() => navigate('/explore')}
+            >
+              Nayi Yojna Khojein
+            </button>
+          </div>
         )}
       </section>
 
-      {/* SECTION B: Nayi Schemes */}
+      {/* SECTION B: Nayi Schemes — Explore */}
       <section aria-labelledby="nayi-schemes">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -64,24 +138,25 @@ export function UserHub() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
         >
-          <Card className="border border-[#ccff00] bg-[#ccff00]/5 backdrop-blur-md hover:bg-[#ccff00]/10 transition-colors">
-          <CardHeader>
-            <h2 id="nayi-schemes" className="text-3xl font-bold text-white tracking-tight">
-              Nayi Schemes (Explore)
-            </h2>
-          </CardHeader>
-          <CardContent className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <p className="text-2xl text-gray-300">
-              Sarkar ki nayi yojnao ka labh uthayein. Jaaniye aap kis scheme ke liye patra hain.
-            </p>
-            <Button 
-              className="py-4 px-8 text-2xl font-bold shrink-0 bg-[#ccff00] text-black hover:bg-[#aacc00] transition-colors" 
-              onClick={() => navigate('/explore')}
-            >
-              Yojna Khojein
-            </Button>
-          </CardContent>
-          </Card>
+          <div className="border border-[#ccff00]/30 bg-gradient-to-br from-[#ccff00]/5 to-transparent backdrop-blur-md rounded-2xl overflow-hidden">
+            <div className="p-6 border-b border-white/10">
+              <h2 id="nayi-schemes" className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+                <Compass className="w-8 h-8 text-[#ccff00]" />
+                Nayi Schemes (Explore)
+              </h2>
+            </div>
+            <div className="p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+              <p className="text-xl text-gray-400">
+                Sarkar ki nayi yojnao ka labh uthayein. Jaaniye aap kis scheme ke liye patra hain — Central aur State dono.
+              </p>
+              <button 
+                className="py-4 px-8 text-xl font-bold shrink-0 bg-[#ccff00] text-black rounded-lg hover:bg-[#aacc00] transition-all active:scale-95 flex items-center gap-2" 
+                onClick={() => navigate('/explore')}
+              >
+                Yojna Khojein <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </motion.div>
       </section>
     </motion.div>

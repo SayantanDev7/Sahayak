@@ -24,14 +24,19 @@ export function Auth() {
       .catch(err => console.error("Could not load Lottie", err));
   }, []);
 
+  const [notification, setNotification] = useState(null);
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await authService.doLogin(loginData);
+      const result = await authService.doLogin(loginData);
+      // Persist session
+      localStorage.setItem('sahayak_user', JSON.stringify(result.user));
+      localStorage.setItem('sahayak_token', result.token);
       navigate('/dashboard');
     } catch (err) {
-      alert(err.message || 'Login failed');
+      setNotification({ type: 'error', message: err.message || 'Login failed' });
     } finally {
       setLoading(false);
     }
@@ -42,11 +47,10 @@ export function Auth() {
     setLoading(true);
     try {
       await authService.doSignup(signupData);
-      // Immediately switch to login or dashboard
       setIsRightPanelActive(false);
-      alert('Signup successful! Please login.');
+      setNotification({ type: 'success', message: 'Account ban gaya! Ab login karein.' });
     } catch (err) {
-      alert(err.message || 'Signup failed');
+      setNotification({ type: 'error', message: err.message || 'Signup failed' });
     } finally {
       setLoading(false);
     }
@@ -201,6 +205,31 @@ export function Auth() {
         </div>
 
       </div>
+
+      {/* Notification Modal */}
+      {notification && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setNotification(null)}>
+          <div
+            className={`p-8 rounded-2xl text-center max-w-sm w-full mx-4 border ${
+              notification.type === 'success'
+                ? 'bg-[#151515] border-green-500/50'
+                : 'bg-[#151515] border-red-500/50'
+            }`}
+            onClick={e => e.stopPropagation()}
+          >
+            <h2 className={`text-2xl font-black mb-3 ${notification.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+              {notification.type === 'success' ? '✅ SUCCESS' : '❌ ERROR'}
+            </h2>
+            <p className="text-gray-300 text-lg mb-6">{notification.message}</p>
+            <button
+              onClick={() => setNotification(null)}
+              className="w-full py-3 rounded-lg font-bold text-black bg-[#ccff00] hover:bg-[#aacc00] transition-colors"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
