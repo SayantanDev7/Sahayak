@@ -1,8 +1,11 @@
 import React from 'react';
 import { Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 export const About = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 50 }}
@@ -12,24 +15,18 @@ export const About = () => {
       className="max-w-6xl mx-auto py-20 flex flex-col md:flex-row gap-16 px-4 font-sans items-center"
     >
       <div className="w-full md:w-1/2">
-        <h2 className="text-4xl text-[#1a5f42] font-extrabold mb-6">About</h2>
+        <h2 className="text-4xl text-[#1a5f42] font-extrabold mb-6">{t.about.title}</h2>
         <div className="text-gray-700 space-y-4 mb-8 text-lg">
-          <p>
-            Sahayak is a visionary national platform designed to bring government schemes directly to the citizens. We bridge the gap between policy and public by providing a simplified, one-stop portal for all government benefits.
-          </p>
-          <p>
-            Our intelligent recommendation system analyzes user profiles and suggests the most relevant schemes, ensuring that everyone gets the support they rightfully deserve without navigating complex bureaucracies.
-          </p>
-          <p>
-            With an aim to digitally empower every citizen, Sahayak stands as a beacon of transparency, accessibility, and proactive governance.
-          </p>
+          <p>{t.about.p1}</p>
+          <p>{t.about.p2}</p>
+          <p>{t.about.p3}</p>
         </div>
         <motion.button 
           whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
           whileTap={{ scale: 0.95 }}
           className="bg-[#213b7e] hover:bg-[#152759] transition-colors text-white px-8 py-3 rounded font-medium shadow inline-block"
         >
-          View More &rarr;
+          {t.about.btn}
         </motion.button>
       </div>
       

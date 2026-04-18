@@ -2,10 +2,13 @@ import React from 'react';
 import { ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const MotionLink = motion(Link);
 
 export const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 30 }}
@@ -20,20 +23,20 @@ export const Hero = () => {
       {/* Small Top Badge */}
       <div className="border border-white/20 text-gray-300 rounded-full px-4 py-1.5 text-sm mb-8 inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm z-10">
         <ShieldCheck size={16} className="text-[#ccff00]" />
-        Trusted platform for 1M+ Citizens
+        {t.hero.trust}
       </div>
 
       {/* Main Headline */}
       <h1 className="text-white text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.9] max-w-5xl mb-6 z-10">
-        GOVERNMENT SCHEMES IN <br className="hidden md:block" />
+        {t.hero.titleTop} <br className="hidden md:block" />
         <span className="text-transparent" style={{ WebkitTextStroke: '1px white', textShadow: '0 0 30px rgba(204,255,0,0.15)' }}>
-          EVERY PIXEL
+          {t.hero.titleBottom}
         </span>
       </h1>
 
       {/* Sub-headline */}
       <p className="text-gray-400 text-xl md:text-2xl max-w-2xl mx-auto mb-10 z-10">
-        We craft stunningly easy pathways for citizens to discover and apply for schemes.
+        {t.hero.subtitle}
       </p>
 
       {/* Action Buttons */}
@@ -44,7 +47,7 @@ export const Hero = () => {
           whileTap={{ scale: 0.98 }}
           className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold hover:bg-[#ccff00] transition-colors inline-block"
         >
-          Explore Schemes
+          {t.hero.exploreBtn}
         </MotionLink>
         <motion.button 
           whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
@@ -52,7 +55,7 @@ export const Hero = () => {
           onClick={() => document.getElementById('process-section')?.scrollIntoView({ behavior: 'smooth' })}
           className="border border-white/30 text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white/10 transition-colors backdrop-blur-sm"
         >
-          Know More
+          {t.hero.knowMoreBtn}
         </motion.button>
       </div>
     </motion.div>

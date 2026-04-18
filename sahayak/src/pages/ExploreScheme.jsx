@@ -4,61 +4,23 @@ import { centralSchemes } from '../data/centralSchemes';
 import { Card, CardContent, CardHeader } from '../components/ui/Card';
 import { Building2, Map, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const statesList = [
-  {
-    "id": "westBengal",
-    "label": "West Bengal",
-    "key": "westBengalSchemes"
-  },
-  {
-    "id": "andhraPradesh",
-    "label": "Andhra Pradesh",
-    "key": "andhraPradeshSchemes"
-  },
-  {
-    "id": "gujarat",
-    "label": "Gujarat",
-    "key": "gujaratSchemes"
-  },
-  {
-    "id": "delhi",
-    "label": "Delhi",
-    "key": "delhiSchemes"
-  },
-  {
-    "id": "bihar",
-    "label": "Bihar",
-    "key": "biharSchemes"
-  },
-  {
-    "id": "karnataka",
-    "label": "Karnataka",
-    "key": "karnatakaSchemes"
-  },
-  {
-    "id": "punjab",
-    "label": "Punjab",
-    "key": "punjabSchemes"
-  },
-  {
-    "id": "maharashtra",
-    "label": "Maharashtra",
-    "key": "maharashtraSchemes"
-  },
-  {
-    "id": "uttarPradesh",
-    "label": "Uttar Pradesh",
-    "key": "uttarPradeshSchemes"
-  },
-  {
-    "id": "tamilNadu",
-    "label": "Tamil Nadu",
-    "key": "tamilNaduSchemes"
-  }
+  { id: "westBengal",    label: "West Bengal",    labelHi: "पश्चिम बंगाल",  key: "westBengalSchemes" },
+  { id: "andhraPradesh", label: "Andhra Pradesh", labelHi: "आंध्र प्रदेश",  key: "andhraPradeshSchemes" },
+  { id: "gujarat",       label: "Gujarat",        labelHi: "गुजरात",         key: "gujaratSchemes" },
+  { id: "delhi",         label: "Delhi",          labelHi: "दिल्ली",         key: "delhiSchemes" },
+  { id: "bihar",         label: "Bihar",          labelHi: "बिहार",          key: "biharSchemes" },
+  { id: "karnataka",     label: "Karnataka",      labelHi: "कर्नाटक",        key: "karnatakaSchemes" },
+  { id: "punjab",        label: "Punjab",         labelHi: "पंजाब",          key: "punjabSchemes" },
+  { id: "maharashtra",   label: "Maharashtra",    labelHi: "महाराष्ट्र",     key: "maharashtraSchemes" },
+  { id: "uttarPradesh",  label: "Uttar Pradesh",  labelHi: "उत्तर प्रदेश",   key: "uttarPradeshSchemes" },
+  { id: "tamilNadu",     label: "Tamil Nadu",     labelHi: "तमिल नाडु",      key: "tamilNaduSchemes" }
 ];
 
 export function ExploreScheme() {
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
   const [activeAuthority, setActiveAuthority] = useState(null); // null, 'central' or 'state'
   const [selectedState, setSelectedState] = useState(null);
@@ -103,7 +65,7 @@ export function ExploreScheme() {
       className="space-y-10 px-6 py-10 max-w-6xl mx-auto font-sans text-white"
     >
       <h1 className="text-4xl md:text-5xl font-black text-center uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>
-        Yojna Khojein <span className="text-[#ccff00]">(Explore)</span>
+        {t.explore.title}{t.explore.titleSpan && <> <span className="text-[#ccff00]">{t.explore.titleSpan}</span></>}
       </h1>
 
       {/* Dual-Authority Layout */}
@@ -117,8 +79,8 @@ export function ExploreScheme() {
           }`}
         >
           <Building2 className={`w-16 h-16 mb-4 ${activeAuthority === 'central' ? 'text-[#ccff00]' : 'text-gray-400'}`} />
-          <h2 className="text-3xl font-bold text-white">Central Government</h2>
-          <p className="text-xl mt-2 text-gray-400">Kendra Sarkar ki Yojna</p>
+          <h2 className="text-3xl font-bold text-white">{t.explore.central}</h2>
+          <p className="text-xl mt-2 text-gray-400">{t.explore.centralDesc}</p>
         </motion.button>
 
         <motion.button
@@ -130,15 +92,15 @@ export function ExploreScheme() {
           }`}
         >
           <Map className={`w-16 h-16 mb-4 ${activeAuthority === 'state' ? 'text-[#ccff00]' : 'text-gray-400'}`} />
-          <h2 className="text-3xl font-bold text-white">State Government</h2>
-          <p className="text-xl mt-2 text-gray-400">Rajya Sarkar ki Yojna</p>
+          <h2 className="text-3xl font-bold text-white">{t.explore.state}</h2>
+          <p className="text-xl mt-2 text-gray-400">{t.explore.stateDesc}</p>
         </motion.button>
       </div>
 
       {/* State Selection Grid */}
       {activeAuthority === 'state' && (
         <div className="bg-white/5 backdrop-blur-md p-6 rounded-xl border border-white/10">
-          <h3 className="text-2xl font-bold mb-6 text-white tracking-tight">Apna Rajya (State) Chunein:</h3>
+          <h3 className="text-2xl font-bold mb-6 text-white tracking-tight">{t.explore.stateSelect}</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {statesList.map(st => (
               <motion.button
@@ -150,7 +112,7 @@ export function ExploreScheme() {
                   selectedState?.id === st.id ? 'bg-[#ccff00] text-black border-[#ccff00]' : 'text-gray-300 bg-black/50 border-white/10 hover:border-white/30 hover:bg-white/5'
                 }`}
               >
-                {st.label}
+                {language === 'hi' ? st.labelHi : st.label}
               </motion.button>
             ))}
           </div>
@@ -160,9 +122,9 @@ export function ExploreScheme() {
       {/* Scheme List Render */}
       <div className="space-y-6">
         {!activeAuthority ? (
-          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Kripya upar se (Central / State) chunein.</p>
+          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">{t.explore.selectPrompt}</p>
         ) : loading ? (
-          <p className="text-2xl text-center text-[#ccff00] py-10 animate-pulse">Data load ho raha hai...</p>
+          <p className="text-2xl text-center text-[#ccff00] py-10 animate-pulse">{t.explore.loading}</p>
         ) : schemes.length > 0 ? (
           schemes.map((scheme, index) => (
             <motion.div
@@ -176,23 +138,23 @@ export function ExploreScheme() {
               <Card className="bg-white/5 border border-white/10 hover:border-white/30 backdrop-blur-md transition-all">
                 <CardContent className="p-6 md:p-8 flex flex-col md:flex-row justify-between md:items-center gap-6">
                 <div>
-                  <h2 className="text-3xl font-bold mb-2 text-white">{scheme.title}</h2>
-                  <p className="text-xl font-medium text-[#ccff00]">Labh (Benefit): {scheme.benefit}</p>
+                  <h2 className="text-3xl font-bold mb-2 text-white">{t.schemeTitles[scheme.title] || scheme.title}</h2>
+                  <p className="text-xl font-medium text-[#ccff00]">{t.explore.benefit} {scheme.benefit}</p>
                 </div>
                 <button
                   onClick={() => navigate(`/scheme/${scheme.id}?source=${activeAuthority}&state=${selectedState?.id || ''}`)}
                   className="flex items-center justify-center gap-2 py-4 px-8 text-xl font-bold text-black rounded-lg shrink-0 bg-[#ccff00] hover:bg-[#aacc00] transition-colors"
                 >
-                  Patrata Janein <ChevronRight className="w-5 h-5" />
+                  {t.explore.knowEligibility} <ChevronRight className="w-5 h-5" />
                 </button>
               </CardContent>
               </Card>
             </motion.div>
           ))
         ) : activeAuthority === 'state' && !selectedState ? (
-          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Rajya chunne ke baad yojnaein dikhengi.</p>
+          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">{t.explore.statePrompt}</p>
         ) : (
-          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Koi yojna nahi mili.</p>
+          <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">{t.explore.notFound}</p>
         )}
       </div>
     </motion.div>

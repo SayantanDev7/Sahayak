@@ -1,36 +1,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Search, CheckCircle, FileWarning } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
-const trackerStages = [
-  { id: 1, label: "Application Submitted", icon: FileText, status: "completed", date: "Oct 12" },
-  { id: 2, label: "Document Verification", icon: Search, status: "active", date: "In Progress" },
-  { id: 3, label: "Under Review (Officer)", icon: FileWarning, status: "pending", date: "Pending" },
-  { id: 4, label: "Final Approval", icon: CheckCircle, status: "pending", date: "Pending" }
-];
+const stageIcons = [FileText, Search, FileWarning, CheckCircle];
+const stageStatuses = ['completed', 'active', 'pending', 'pending'];
 
 export function ApplicationTracker() {
+  const { t } = useLanguage();
+  const trackerStages = t.tracker.stages.map((stage, i) => ({
+    ...stage,
+    icon: stageIcons[i],
+    status: stageStatuses[i],
+  }));
+
   return (
     <div className="w-full bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl overflow-hidden">
       <div className="p-6 border-b border-white/10">
         <div className="flex justify-between items-center">
           <div>
             <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">
-              Application ID
+              {t.tracker.appId}
             </p>
             <h3 className="text-2xl font-black mt-1 text-white">
               #RKA-992-11
             </h3>
           </div>
           <span className="inline-block px-4 py-2 font-bold rounded-lg text-base bg-[#ccff00]/10 text-[#ccff00] border border-[#ccff00]/30">
-            In Progress
+            {t.tracker.inProgress}
           </span>
         </div>
       </div>
 
       <div className="p-6">
         <h4 className="text-xl font-bold mb-8 text-gray-300">
-          Application Status Tracker
+          {t.tracker.statusTitle}
         </h4>
 
         <div className="relative">
@@ -38,13 +42,13 @@ export function ApplicationTracker() {
 
           <ol className="space-y-8 relative z-10">
             {trackerStages.map((stage, index) => {
-              const isCompleted = stage.status === "completed";
-              const isActive = stage.status === "active";
-              const isPending = stage.status === "pending";
+              const isCompleted = stage.status === 'completed';
+              const isActive = stage.status === 'active';
+              const isPending = stage.status === 'pending';
               const Icon = stage.icon;
 
               return (
-                <li key={stage.id} className="flex items-start">
+                <li key={index} className="flex items-start">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -74,7 +78,7 @@ export function ApplicationTracker() {
 
                     {isCompleted && (
                       <p className="text-base mt-1 font-medium inline-block px-2 rounded bg-green-500/10 text-green-400">
-                        Done on {stage.date}
+                        {t.tracker.doneOn} {stage.date}
                       </p>
                     )}
 
@@ -84,13 +88,13 @@ export function ApplicationTracker() {
                         transition={{ repeat: Infinity, duration: 2 }}
                         className="text-base mt-1 font-bold text-[#ccff00]"
                       >
-                        Currently processing...
+                        {t.tracker.processing}
                       </motion.p>
                     )}
 
                     {isPending && (
                       <p className="text-base text-gray-600 mt-1 font-medium">
-                        Waiting for previous step
+                        {t.tracker.waiting}
                       </p>
                     )}
                   </div>
