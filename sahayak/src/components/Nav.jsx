@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export const Navbar = () => {
+export const Nav = () => {
   return (
     <nav className="fixed w-full top-0 z-50 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/10 px-8 py-5 flex justify-between items-center font-sans transition-all">
       <div className="flex items-center">
