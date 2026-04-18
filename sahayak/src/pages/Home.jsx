@@ -4,7 +4,6 @@ import { Marquee } from '../components/Marquee';
 import { Categories } from '../components/Categories';
 import { Process } from '../components/Process';
 import { FAQ } from '../components/FAQ';
-import { Footer } from '../components/Footer';
 
 export const Home = () => {
   return (
@@ -14,7 +13,6 @@ export const Home = () => {
       <Categories />
       <Process />
       <FAQ />
-      <Footer />
     </>
   );
 };
