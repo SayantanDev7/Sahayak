@@ -6,6 +6,7 @@ import { useProgress } from '../hooks/useProgress';
 import { Card, CardHeader, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { CheckCircle2, ChevronLeft } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function SchemeDetails() {
   const { id } = useParams();
@@ -68,7 +69,12 @@ export function SchemeDetails() {
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto px-6 py-8 font-sans text-white">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="space-y-8 max-w-5xl mx-auto px-6 py-8 font-sans text-white"
+    >
       <Button 
         variant="outline" 
         onClick={() => navigate('/explore')}
@@ -122,7 +128,13 @@ export function SchemeDetails() {
           </div>
         )}
 
-        <div className="space-y-4">
+        <motion.div 
+          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="space-y-4"
+        >
           {scheme.docs.map((docName, idx) => {
             const reqId = `doc_${idx}`;
             const docStatusObj = docsStatus?.find(d => d.id === reqId);
@@ -130,11 +142,15 @@ export function SchemeDetails() {
             const isActiveUpload = activeDocIndex === idx;
 
             return (
-              <Card 
-                key={idx} 
-                className={`transition-all border-l-4 backdrop-blur-md ${isUploaded ? 'bg-green-500/10 border-green-500' : 'bg-white/5 border-white/20'}`}
+              <motion.div
+                key={idx}
+                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+                whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
               >
-                <CardContent className="p-6">
+                <Card 
+                  className={`transition-all border-l-4 backdrop-blur-md h-full ${isUploaded ? 'bg-green-500/10 border-green-500' : 'bg-white/5 border-white/20'}`}
+                >
+                  <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
                       <h3 className="text-2xl font-bold text-white flex items-center gap-2">
@@ -167,11 +183,12 @@ export function SchemeDetails() {
                     </div>
                   )}
                 </CardContent>
-              </Card>
+                </Card>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </section>
-    </div>
+    </motion.div>
   );
 }

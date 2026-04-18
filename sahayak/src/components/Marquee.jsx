@@ -8,7 +8,13 @@ export const Marquee = () => {
   const marqueeContent = Array(10).fill(text).join('');
 
   return (
-    <div className="w-full py-10 border-y border-white/10 bg-[#0a0a0a] overflow-hidden flex whitespace-nowrap font-sans">
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full py-10 border-y border-white/10 bg-[#0a0a0a] overflow-hidden flex whitespace-nowrap font-sans"
+    >
       <motion.div 
         className="flex"
         animate={{ x: ["0%", "-50%"] }}
@@ -18,6 +24,6 @@ export const Marquee = () => {
           {marqueeContent}
         </span>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
