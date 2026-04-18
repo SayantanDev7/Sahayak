@@ -158,22 +158,18 @@ export function ExploreScheme() {
       )}
 
       {/* Scheme List Render */}
-      <motion.div 
-        variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true }}
-        className="space-y-6"
-      >
+      <div className="space-y-6">
         {!activeAuthority ? (
           <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Kripya upar se (Central / State) chunein.</p>
         ) : loading ? (
           <p className="text-2xl text-center text-[#ccff00] py-10 animate-pulse">Data load ho raha hai...</p>
         ) : schemes.length > 0 ? (
-          schemes.map(scheme => (
+          schemes.map((scheme, index) => (
             <motion.div
               key={scheme.id}
-              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05, type: "spring", stiffness: 100 }}
               whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
               whileTap={{ scale: 0.98 }}
             >
@@ -198,7 +194,7 @@ export function ExploreScheme() {
         ) : (
           <p className="text-xl text-center text-gray-500 py-10 border border-dashed border-white/10 rounded-2xl">Koi yojna nahi mili.</p>
         )}
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

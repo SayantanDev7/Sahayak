@@ -128,13 +128,7 @@ export function SchemeDetails() {
           </div>
         )}
 
-        <motion.div 
-          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="space-y-4"
-        >
+        <div className="space-y-4">
           {scheme.docs.map((docName, idx) => {
             const reqId = `doc_${idx}`;
             const docStatusObj = docsStatus?.find(d => d.id === reqId);
@@ -144,7 +138,9 @@ export function SchemeDetails() {
             return (
               <motion.div
                 key={idx}
-                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05, type: "spring", stiffness: 100 }}
                 whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
               >
                 <Card 
@@ -187,7 +183,7 @@ export function SchemeDetails() {
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
       </section>
     </motion.div>
   );
