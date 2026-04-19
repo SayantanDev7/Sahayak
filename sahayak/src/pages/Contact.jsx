@@ -20,7 +20,7 @@ export function Contact() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="max-w-4xl mx-auto space-y-12 px-6 pt-10 pb-20 font-sans text-white"
+      className="max-w-4xl mx-auto space-y-12 px-6 pt-50 pb-20 font-sans text-white"
     >
       <div className="text-center space-y-4">
         <h1 className="text-5xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '1px white' }}>

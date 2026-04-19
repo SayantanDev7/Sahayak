@@ -16,6 +16,8 @@ export function Auth() {
 
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [signupData, setSignupData] = useState({ name: '', email: '', password: '' });
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Fetch Lottie Blob animation from open source generic URL
@@ -39,6 +41,20 @@ export function Auth() {
       navigate('/dashboard');
     } catch (err) {
       setNotification({ type: 'error', message: err.message || 'Login failed' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPasswordSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await authService.doResetPassword(resetEmail);
+      setNotification({ type: 'success', message: t.auth.resetSuccess });
+      setIsForgotPassword(false);
+    } catch (err) {
+      setNotification({ type: 'error', message: err.message || 'Reset failed' });
     } finally {
       setLoading(false);
     }
@@ -120,67 +136,107 @@ export function Auth() {
 
         {/* SIGN IN PANEL */}
         <div className="auth-form-container sign-in-container bg-[#151515] flex flex-col justify-center px-10 text-center">
-          <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-6">Welcome Back</h1>
-          <form onSubmit={handleLoginSubmit} className="flex flex-col items-center w-full space-y-4">
-            <div className="flex items-center bg-black/50 border border-white/10 p-3 rounded-lg w-full focus-within:border-[#ccff00] transition-colors">
-              <Mail className="text-gray-400 mr-3 w-5 h-5" />
-              <input
-                type="email"
-                placeholder="Email"
-                value={loginData.email}
-                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                className="bg-transparent border-none outline-none text-white w-full"
-                required
-              />
-            </div>
-            <div className="flex items-center bg-black/50 border border-white/10 p-3 rounded-lg w-full focus-within:border-[#ccff00] transition-colors">
-              <Lock className="text-gray-400 mr-3 w-5 h-5" />
-              <input
-                type="password"
-                placeholder="Password"
-                value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                className="bg-transparent border-none outline-none text-white w-full"
-                required
-              />
-            </div>
-            <a href="#" className="text-gray-400 text-sm mt-2 hover:text-white transition-colors self-end">Forgot your password?</a>
-            <button 
-              disabled={loading}
-              className="mt-6 bg-[#ccff00] text-black w-full py-4 rounded-lg font-bold text-lg hover:bg-[#aacc00] transition-transform active:scale-95 flex items-center justify-center gap-2"
-            >
-              {loading ? 'Logging in...' : 'Sign In'} <ArrowRight className="w-5 h-5" />
-            </button>
-            <div className="w-full mt-6">
-              <div className="flex items-center text-center mb-4 text-gray-500">
-                <div className="flex-1 border-b border-white/10"></div>
-                <span className="px-3 text-sm">OR</span>
-                <div className="flex-1 border-b border-white/10"></div>
-              </div>
-              <div className="flex justify-center gap-4">
-                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
-                  try {
-                    await authService.doGoogleLogin();
-                    navigate('/dashboard');
-                  } catch (err) {
-                    setNotification({ type: 'error', message: err.message });
-                  }
-                }}>
-                  <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="w-6 h-6" />
+          {isForgotPassword ? (
+            <>
+              <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-6">{t.auth.forgotPasswordTitle}</h1>
+              <form onSubmit={handleResetPasswordSubmit} className="flex flex-col items-center w-full space-y-4">
+                <div className="flex items-center bg-black/50 border border-white/10 p-3 rounded-lg w-full focus-within:border-[#ccff00] transition-colors">
+                  <Mail className="text-gray-400 mr-3 w-5 h-5" />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    className="bg-transparent border-none outline-none text-white w-full"
+                    required
+                  />
+                </div>
+                <button 
+                  disabled={loading}
+                  className="mt-6 bg-[#ccff00] text-black w-full py-4 rounded-lg font-bold text-lg hover:bg-[#aacc00] transition-transform active:scale-95 flex items-center justify-center gap-2"
+                >
+                  {loading ? 'Sending...' : t.auth.resetBtn} <ArrowRight className="w-5 h-5" />
                 </button>
-                <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
-                  try {
-                    await authService.doGithubLogin();
-                    navigate('/dashboard');
-                  } catch (err) {
-                    setNotification({ type: 'error', message: err.message });
-                  }
-                }}>
-                  <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" className="w-6 h-6" />
+                <button 
+                  type="button"
+                  onClick={() => setIsForgotPassword(false)}
+                  className="text-gray-400 text-sm mt-4 hover:text-white transition-colors"
+                >
+                  {t.auth.backToLogin}
                 </button>
-              </div>
-            </div>
-          </form>
+              </form>
+            </>
+          ) : (
+            <>
+              <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-6">Welcome Back</h1>
+              <form onSubmit={handleLoginSubmit} className="flex flex-col items-center w-full space-y-4">
+                <div className="flex items-center bg-black/50 border border-white/10 p-3 rounded-lg w-full focus-within:border-[#ccff00] transition-colors">
+                  <Mail className="text-gray-400 mr-3 w-5 h-5" />
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={loginData.email}
+                    onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                    className="bg-transparent border-none outline-none text-white w-full"
+                    required
+                  />
+                </div>
+                <div className="flex items-center bg-black/50 border border-white/10 p-3 rounded-lg w-full focus-within:border-[#ccff00] transition-colors">
+                  <Lock className="text-gray-400 mr-3 w-5 h-5" />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                    className="bg-transparent border-none outline-none text-white w-full"
+                    required
+                  />
+                </div>
+                <button 
+                  type="button" 
+                  onClick={() => setIsForgotPassword(true)}
+                  className="text-gray-400 text-sm mt-2 hover:text-white transition-colors self-end"
+                >
+                  {t.auth.forgotPasswordLink}
+                </button>
+                <button 
+                  disabled={loading}
+                  className="mt-6 bg-[#ccff00] text-black w-full py-4 rounded-lg font-bold text-lg hover:bg-[#aacc00] transition-transform active:scale-95 flex items-center justify-center gap-2"
+                >
+                  {loading ? 'Logging in...' : 'Sign In'} <ArrowRight className="w-5 h-5" />
+                </button>
+                <div className="w-full mt-6">
+                  <div className="flex items-center text-center mb-4 text-gray-500">
+                    <div className="flex-1 border-b border-white/10"></div>
+                    <span className="px-3 text-sm">OR</span>
+                    <div className="flex-1 border-b border-white/10"></div>
+                  </div>
+                  <div className="flex justify-center gap-4">
+                    <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
+                      try {
+                        await authService.doGoogleLogin();
+                        navigate('/dashboard');
+                      } catch (err) {
+                        setNotification({ type: 'error', message: err.message });
+                      }
+                    }}>
+                      <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="w-6 h-6" />
+                    </button>
+                    <button type="button" className="w-12 h-12 rounded-full bg-white flex justify-center items-center hover:scale-105 transition-transform" onClick={async () => {
+                      try {
+                        await authService.doGithubLogin();
+                        navigate('/dashboard');
+                      } catch (err) {
+                        setNotification({ type: 'error', message: err.message });
+                      }
+                    }}>
+                      <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" className="w-6 h-6" />
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </>
+          )}
         </div>
 
         {/* OVERLAY for Animation Toggle */}

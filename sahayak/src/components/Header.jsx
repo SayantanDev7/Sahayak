@@ -9,7 +9,7 @@ export function Header({ lang, toggleLang }) {
       className="text-white shadow-md sticky top-0 z-50"
       style={{ backgroundColor: "#000080" }} // navy fix
     >
-      <div className="max-w-5xl mx-auto px-4 h-24 flex items-center justify-between">
+      <div className="max-w-5xl mx-auto px-8 h-24 flex items-center justify-between">
         <div className="flex items-center gap-4">
           
           {/* Logo */}

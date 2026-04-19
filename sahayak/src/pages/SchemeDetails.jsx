@@ -3,6 +3,7 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { centralSchemes } from '../data/centralSchemes';
 import { SmartStepper } from '../components/SmartStepper';
 import { useProgress } from '../hooks/useProgress';
+import { useUserSchemes } from '../hooks/useUserSchemes';
 import { Card, CardHeader, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { CheckCircle2, ChevronLeft } from 'lucide-react';
@@ -18,6 +19,7 @@ export function SchemeDetails() {
 
   const navigate = useNavigate();
   const { startApplication, progressData } = useProgress();
+  const { enrollScheme, isEnrolled, updateSchemeDoc } = useUserSchemes();
   const [scheme, setScheme] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeDocIndex, setActiveDocIndex] = useState(null);
@@ -78,13 +80,23 @@ export function SchemeDetails() {
 
   const schemeTitle = t.schemeTitles[scheme.title] || scheme.title;
 
-  const handleStart = () => {
-    // startApplication expects { id, title, requirements: [{id, label}] }
-    // We map our new schema to what ProgressContext currently expects:
+  const handleStart = async () => {
+    // 1. Start in ProgressContext for active upload flow
     startApplication({
       id: scheme.id,
       title: schemeTitle,
+      source,
+      stateId: stateId || '',
       requirements: scheme.docs.map((doc, idx) => ({ id: `doc_${idx}`, label: translateDoc(doc) }))
+    });
+
+    // 2. Enroll in UserSchemeContext → syncs to backend
+    await enrollScheme({
+      id: scheme.id,
+      title: schemeTitle,
+      source,
+      stateId: stateId || '',
+      docs: scheme.docs
     });
   };
 

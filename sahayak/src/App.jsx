@@ -1,16 +1,18 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
 import { Mainroutes } from './routes/Mainroutes';
 import { ProgressProvider } from './context/ProgressContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { UserSchemeProvider } from './context/UserSchemeContext';
 
 function App() {
   return (
     <LanguageProvider>
-      <ProgressProvider>
-        <AppContent />
-      </ProgressProvider>
+      <UserSchemeProvider>
+        <ProgressProvider>
+          <AppContent />
+        </ProgressProvider>
+      </UserSchemeProvider>
     </LanguageProvider>
   );
 }
@@ -28,7 +30,6 @@ function AppContent() {
       <main className="flex-grow">
         <Mainroutes />
       </main>
-      <Footer />
     </div>
   );
 }

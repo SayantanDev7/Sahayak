@@ -49,7 +49,7 @@ export const Footer = () => {
 
       {/* The Massive Logo Text */}
       <div className="w-full mt-8 flex justify-center">
-        <h1 className="text-[15vw] font-black text-white leading-none tracking-tighter hover:text-[#ccff00] transition-colors duration-500 cursor-default uppercase">
+        <h1 className="text-[13vw] font-black text-white leading-none tracking-tighter hover:text-[#ccff00] transition-colors duration-500 cursor-default uppercase">
           {t.appName}
         </h1>
       </div>

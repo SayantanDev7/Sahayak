@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 import { 
@@ -20,25 +21,30 @@ import {
 } from 'lucide-react';
 
 const categoryData = [
-  { name: "Agriculture, Rural & Environment", count: "834", icon: Tractor },
-  { name: "Banking, Financial Services and Insurance", count: "326", icon: Landmark },
-  { name: "Business & Entrepreneurship", count: "741", icon: Briefcase },
-  { name: "Education & Learning", count: "1082", icon: GraduationCap },
-  { name: "Health & Wellness", count: "287", icon: HeartPulse },
-  { name: "Housing & Shelter", count: "133", icon: Home },
-  { name: "Public Safety, Law & Justice", count: "33", icon: Scale },
-  { name: "Science, IT & Communications", count: "109", icon: Cpu },
-  { name: "Skills & Employment", count: "395", icon: Wrench },
-  { name: "Social welfare & Empowerment", count: "1432", icon: Users },
-  { name: "Sports & Culture", count: "258", icon: Trophy },
-  { name: "Transport & Infrastructure", count: "99", icon: Train },
-  { name: "Travel & Tourism", count: "97", icon: Map },
-  { name: "Utility & Sanitation", count: "58", icon: Droplet },
-  { name: "Women and Child", count: "464", icon: Baby }
+  { name: "Agriculture, Rural & Environment", count: "834", icon: Tractor, slug: "agriculture" },
+  { name: "Banking, Financial Services and Insurance", count: "326", icon: Landmark, slug: "banking" },
+  { name: "Business & Entrepreneurship", count: "741", icon: Briefcase, slug: "business" },
+  { name: "Education & Learning", count: "1082", icon: GraduationCap, slug: "education" },
+  { name: "Health & Wellness", count: "287", icon: HeartPulse, slug: "health" },
+  { name: "Housing & Shelter", count: "133", icon: Home, slug: "housing" },
+  { name: "Public Safety, Law & Justice", count: "33", icon: Scale, slug: "safety" },
+  { name: "Science, IT & Communications", count: "109", icon: Cpu, slug: "science" },
+  { name: "Skills & Employment", count: "395", icon: Wrench, slug: "employment" },
+  { name: "Social welfare & Empowerment", count: "1432", icon: Users, slug: "social" },
+  { name: "Sports & Culture", count: "258", icon: Trophy, slug: "sports" },
+  { name: "Transport & Infrastructure", count: "99", icon: Train, slug: "transport" },
+  { name: "Travel & Tourism", count: "97", icon: Map, slug: "travel" },
+  { name: "Utility & Sanitation", count: "58", icon: Droplet, slug: "utility" },
+  { name: "Women and Child", count: "464", icon: Baby, slug: "women" }
 ];
 
 export const Categories = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (slug) => {
+    navigate(`/explore?category=${slug}`);
+  };
 
   return (
     <motion.div 
@@ -65,9 +71,10 @@ export const Categories = () => {
             <motion.div 
               key={index}
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              whileTap={{ scale: 0.98 }}
-              className="bg-[#141414] border border-white/5 rounded-3xl p-6 group cursor-pointer hover:border-[#ccff00]/50 transition-colors flex flex-col items-center text-center"
+              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleCategoryClick(item.slug)}
+              className="bg-[#141414] border border-white/5 rounded-3xl p-6 group cursor-pointer hover:border-[#ccff00]/50 transition-all flex flex-col items-center text-center shadow-lg hover:shadow-[#ccff00]/5"
             >
               <div className="bg-white/5 p-4 rounded-full mb-4 group-hover:bg-[#ccff00]/10 transition-colors">
                 <IconComponent size={32} className="text-white group-hover:text-[#ccff00] transition-colors" strokeWidth={1.5} />

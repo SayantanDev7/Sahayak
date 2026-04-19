@@ -18,7 +18,8 @@ import {
   GithubAuthProvider,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 
 // Firebase project config — these are public keys, safe to commit.
@@ -60,5 +61,6 @@ export {
   githubProvider,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  updateProfile,
+  sendPasswordResetEmail
 };

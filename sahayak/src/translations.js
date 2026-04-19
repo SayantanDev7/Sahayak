@@ -103,11 +103,15 @@ export const translations = {
       benefit: "Benefit:",
       knowEligibility: "Check Eligibility",
       statePrompt: "Schemes will be displayed after selecting a state.",
-      notFound: "No schemes found."
+      notFound: "No schemes found.",
+      noResultsMessage: "No scheme found in this category, please explore other schemes",
+      clearFilter: "Clear Filter"
     },
     userHub: {
       title: "My Dashboard",
       subtitle: "All your applications in one place",
+      greeting: "Welcome,",
+      defaultUser: "Citizen",
       pragati: "My Progress",
       done: "Done",
       pending: "Pending",
@@ -117,10 +121,16 @@ export const translations = {
       notUploaded: "Not uploaded",
       noApp: "No active applications found.",
       exploreNew: "Explore New Schemes",
-      explore: "Explore New Schemes",
+      explore: "New Schemes",
       exploreDesc: "Take advantage of new government schemes. Find out which schemes you are eligible for — both Central and State.",
       exploreBtn: "Explore Schemes",
-      docLabel: "Doc"
+      docLabel: "Doc",
+      resume: "Resume",
+      inProgressLabel: "In Progress",
+      submitted: "Submitted",
+      enrolled: "Enrolled",
+      welcomeTitle: "Welcome to Sahayak!",
+      welcomeDesc: "Start by exploring government schemes and applying for the ones you are eligible for."
     },
     schemeDetails: {
       back: "Go Back",
@@ -176,7 +186,12 @@ export const translations = {
       welcomeBack: "Welcome back! Connect with government services and access your dashboard.",
       newHere: "New here? Connect with government services by creating a free account.",
       signInBtn: "Sign In",
-      signUpBtn: "Sign Up"
+      signUpBtn: "Sign Up",
+      forgotPasswordLink: "Forgot your password?",
+      forgotPasswordTitle: "Reset Password",
+      resetBtn: "Send Reset Link",
+      backToLogin: "Back to Login",
+      resetSuccess: "Password reset link sent to your email!"
     },
     tracker: {
       appId: "Application ID",
@@ -364,11 +379,15 @@ export const translations = {
       benefit: "लाभ:",
       knowEligibility: "पात्रता जानें",
       statePrompt: "राज्य चुनने के बाद योजनाएं दिखेंगी।",
-      notFound: "कोई योजना नहीं मिली।"
+      notFound: "कोई योजना नहीं मिली।",
+      noResultsMessage: "इस श्रेणी में कोई योजना नहीं मिली, कृपया अन्य योजनाएं देखें",
+      clearFilter: "फ़िल्टर हटाएं"
     },
     userHub: {
       title: "मेरा डैशबोर्ड",
       subtitle: "आपकी सभी एप्लिकेशन एक जगह",
+      greeting: "नमस्ते,",
+      defaultUser: "नागरिक",
       pragati: "मेरी प्रगति",
       done: "पूर्ण",
       pending: "लंबित",
@@ -378,10 +397,16 @@ export const translations = {
       notUploaded: "अपलोड नहीं हुआ",
       noApp: "कोई सक्रिय आवेदन नहीं मिला।",
       exploreNew: "नई योजना खोजें",
-      explore: "नई योजनाएं (खोजें)",
+      explore: "नई योजनाएं",
       exploreDesc: "सरकार की नई योजनाओं का लाभ उठाएं। जानिए आप किस योजना के लिए पात्र हैं — केंद्र और राज्य दोनों।",
       exploreBtn: "योजनाएं खोजें",
-      docLabel: "दस्तावेज़"
+      docLabel: "दस्तावेज़",
+      resume: "जारी रखें",
+      inProgressLabel: "जारी है",
+      submitted: "जमा किया गया",
+      enrolled: "नामांकित",
+      welcomeTitle: "सहायक में आपका स्वागत है!",
+      welcomeDesc: "सरकारी योजनाएं खोजें और जिनके लिए आप पात्र हैं उनमें आवेदन करें।"
     },
     schemeDetails: {
       back: "पीछे जाएं",
@@ -437,7 +462,12 @@ export const translations = {
       welcomeBack: "वापस स्वागत है! सरकारी सुविधाओं से जुड़ें और अपना डैशबोर्ड एक्सेस करें।",
       newHere: "नए हैं? एक मुफ़्त खाता बनाकर सरकारी सुविधाओं से जुड़ें।",
       signInBtn: "साइन इन करें",
-      signUpBtn: "साइन अप करें"
+      signUpBtn: "साइन अप करें",
+      forgotPasswordLink: "पासवर्ड भूल गए?",
+      forgotPasswordTitle: "पासवर्ड रीसेट करें",
+      resetBtn: "रीसेट लिंक भेजें",
+      backToLogin: "वापस लॉगिन पर जाएं",
+      resetSuccess: "पासवर्ड रीसेट लिंक आपके ईमेल पर भेज दिया गया है!"
     },
     tracker: {
       appId: "आवेदन आईडी",

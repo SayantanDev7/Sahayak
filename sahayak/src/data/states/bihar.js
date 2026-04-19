@@ -2,6 +2,7 @@ export const biharSchemes = [
   {
     "id": "SCH-1008",
     "title": "Bihar Student Credit Card",
+    "category": "education",
     "benefit": "₹10,00,000",
     "eligibility": [
       "Target Group: General",
@@ -22,6 +23,7 @@ export const biharSchemes = [
   {
     "id": "SCH-1030",
     "title": "Bihar Fee Waiver Scheme",
+    "category": "women",
     "benefit": "₹10,00,000",
     "eligibility": [
       "Target Group: Women",

@@ -6,10 +6,14 @@ import {
   googleProvider, 
   githubProvider,
   signOut,
-  updateProfile
+  updateProfile,
+  sendPasswordResetEmail
 } from './firebase';
 
 export const authService = {
+  doResetPassword: async (email) => {
+    await sendPasswordResetEmail(auth, email);
+  },
   doLogin: async (credentials) => {
     const userCredential = await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
     const token = await userCredential.user.getIdToken();
