@@ -18,7 +18,15 @@ export const verifyDocument = async (file) => {
     setTimeout(() => {
       // Simulate validation logic based on file properties
       const validExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
-      const ext = file.name.split('.').pop().toLowerCase();
+      const fileName = file.name || 'document_blob';
+      const fileType = file.type || '';
+      
+      let ext = fileName.split('.').pop().toLowerCase();
+      // Fallback if no extension in name but type exists
+      if (ext === 'document_blob' && fileType) {
+        ext = fileType.split('/')[1] || 'pdf';
+      }
+
       const isValidFormat = validExtensions.includes(ext);
       const isValidSize = file.size <= 5 * 1024 * 1024; // 5MB max
 

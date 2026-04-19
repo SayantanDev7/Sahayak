@@ -1,542 +1,78 @@
 export const uttarPradeshSchemes = [
+  // --- EDUCATION ---
   {
-    "id": "SCH-1061",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-EDU-01",
+    title: "UP Post-Matric Scholarship",
+    category: "education",
+    benefit: "Fee Reimbursement + Maintenance Allowance",
+    eligibility: ["SC/ST/OBC/General categories", "Resident of UP", "Income < ₹2 LPA (Gen/OBC) or ₹2.5 LPA (SC/ST)"],
+    docs: ["Aadhaar Card", "Income Certificate", "Caste Certificate", "Fee Receipt"],
+    reqs: { format: "PDF", size: "500kb" }
   },
+
+  // --- HEALTH ---
   {
-    "id": "SCH-1064",
-    "title": "Uttar Pradesh Merit Scholarship",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-HLTH-01",
+    title: "UP Janani Suraksha Yojana",
+    category: "health",
+    benefit: "₹1,400 (Rural) / ₹1,000 (Urban) for delivery",
+    eligibility: ["Pregnant Women", "Institutional delivery", "Low income"],
+    docs: ["Aadhaar Card", "MCP Card", "Bank Passbook"],
+    reqs: { format: "JPG", size: "300kb" }
   },
+
+  // --- AGRICULTURE ---
   {
-    "id": "SCH-1093",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-AGRI-01",
+    title: "UP Ganna (Sugarcane) Parchi System",
+    category: "agriculture",
+    benefit: "Direct sale of Sugarcane to Mills",
+    eligibility: ["Sugarcane Farmers in UP", "Member of Cooperative Society"],
+    docs: ["Aadhaar Card", "Ganna Calendar Copy", "Bank Account Details"],
+    reqs: { format: "PDF", size: "500kb" }
   },
+
+  // --- WOMEN ---
   {
-    "id": "SCH-1099",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-WOM-01",
+    title: "Kanya Sumangala Yojana",
+    category: "women",
+    benefit: "₹15,000 to ₹25,000 in stages",
+    eligibility: ["Max 2 girls in family", "Resident of UP", "Income < ₹3 LPA"],
+    docs: ["Aadhaar Card", "Birth Certificate", "Family Photo", "Income Certificate"],
+    reqs: { format: "PDF", size: "1mb" }
   },
+
+  // --- SOCIAL ---
   {
-    "id": "SCH-1132",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-SOC-01",
+    title: "UP Widow Pension Scheme",
+    category: "social",
+    benefit: "₹1,000 Monthly Pension",
+    eligibility: ["Widows aged 18-60", "Resident of UP", "Not re-married"],
+    docs: ["Aadhaar Card", "Death Certificate of Husband", "Income Certificate"],
+    reqs: { format: "PDF", size: "400kb" }
   },
+
+  // --- BUSINESS ---
   {
-    "id": "SCH-1173",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹250000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-BIZ-01",
+    title: "One District One Product (ODOP) Loan Scheme",
+    category: "business",
+    benefit: "Financial assistance for traditional crafts",
+    eligibility: ["Artisans", "Small Units in ODOP clusters", "Resident of UP"],
+    docs: ["Aadhaar Card", "Project Report", "Artisan ID Card"],
+    reqs: { format: "PDF", size: "1mb" }
   },
+
+  // --- EMPLOYMENT ---
   {
-    "id": "SCH-1174",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1193",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1236",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1244",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1262",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1277",
-    "title": "Uttar Pradesh Higher Ed Stipend",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1287",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1289",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1296",
-    "title": "Uttar Pradesh Merit Scholarship",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1302",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1324",
-    "title": "Uttar Pradesh Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1340",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1356",
-    "title": "Uttar Pradesh Student Credit Card",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: No limit",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1370",
-    "title": "Uttar Pradesh Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1397",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹800000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1403",
-    "title": "Uttar Pradesh Merit Scholarship",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1409",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹800000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1431",
-    "title": "Uttar Pradesh Merit Scholarship",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1445",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1451",
-    "title": "Uttar Pradesh Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1485",
-    "title": "Uttar Pradesh Fee Waiver Scheme",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹800000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "UP-EMP-01",
+    title: "UP Berojgari Bhatta (Unemployment Allowance)",
+    category: "employment",
+    benefit: "₹1,000 to ₹1,500 monthly",
+    eligibility: ["Unemployed youth (25-35 years)", "Class 10 Pass", "Income < ₹3 LPA"],
+    docs: ["Aadhaar Card", "Education Certificates", "Employment Exchange Cert"],
+    reqs: { format: "PDF", size: "500kb" }
   }
 ];

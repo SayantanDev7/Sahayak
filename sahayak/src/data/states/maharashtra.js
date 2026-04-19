@@ -1,562 +1,76 @@
 export const maharashtraSchemes = [
+  // --- EDUCATION ---
   {
-    "id": "SCH-1022",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-EDU-01",
+    title: "Rajarshi Chhatrapati Shahu Maharaj Fee Reimbursement",
+    category: "education",
+    benefit: "50% - 100% Tuition Fee Reimbursement",
+    eligibility: ["EBC Category students", "Professional Courses", "Income < ₹8 LPA"],
+    docs: ["Aadhaar Card", "Income Certificate", "Caste Certificate", "Admission Receipt"],
+    reqs: { format: "PDF", size: "1mb" }
   },
   {
-    "id": "SCH-1054",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-EDU-02",
+    title: "Punjabarao Deshmukh Hostel Maintenance Allowance",
+    category: "education",
+    benefit: "₹2,000 to ₹3,000 monthly allowance",
+    eligibility: ["Children of registered laborers", "Registered in professional courses", "Staying in Hostels"],
+    docs: ["Aadhaar Card", "Hostel Receipt", "Laborer Registration Card"],
+    reqs: { format: "PDF", size: "500kb" }
   },
+
+  // --- AGRICULTURE ---
   {
-    "id": "SCH-1078",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-AGRI-01",
+    title: "Namo Shetkari Mahasanman Nidhi",
+    category: "agriculture",
+    benefit: "₹6,000 per year (Additional to PM-KISAN)",
+    eligibility: ["PM-KISAN beneficiaries", "Maharashtra Resident", "Small/Marginal Farmers"],
+    docs: ["Aadhaar Card", "Land Records", "Bank Passbook"],
+    reqs: { format: "PDF", size: "300kb" }
   },
+
+  // --- HEALTH ---
   {
-    "id": "SCH-1081",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-HLTH-01",
+    title: "Mahatma Jyotirao Phule Jan Arogya Yojana",
+    category: "health",
+    benefit: "₹1.5 Lakh to ₹5 Lakh cover per family",
+    eligibility: ["Ration Card holders (Yellow/Orange)", "All Families in specific districts"],
+    docs: ["Aadhaar Card", "Ration Card", "Identity Proof"],
+    reqs: { format: "JPG", size: "500kb" }
   },
+
+  // --- WOMEN ---
   {
-    "id": "SCH-1118",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹800000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-WOM-01",
+    title: "Majhi Ladki Bahin Yojana",
+    category: "women",
+    benefit: "₹1,500 Monthly allowance",
+    eligibility: ["Women aged 21-65", "Income < ₹2.5 LPA", "Resident of Maharashtra"],
+    docs: ["Aadhaar Card", "Income Certificate", "Domicile Certificate", "Ration Card"],
+    reqs: { format: "PDF", size: "1mb" }
   },
+
+  // --- SOCIAL ---
   {
-    "id": "SCH-1130",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-SOC-01",
+    title: "Sanjay Gandhi Niradhar Anudan Yojana",
+    category: "social",
+    benefit: "₹600 to ₹900 monthly pension",
+    eligibility: ["Destitute persons", "Divyang persons", "Widows with children"],
+    docs: ["Aadhaar Card", "Income Certificate", "Disability Certificate (if applicable)"],
+    reqs: { format: "PDF", size: "400kb" }
   },
+
+  // --- BUSINESS ---
   {
-    "id": "SCH-1153",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹800000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1155",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹250000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1171",
-    "title": "Maharashtra Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1178",
-    "title": "Maharashtra Student Credit Card",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹250000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1179",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1194",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1199",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1206",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1212",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1228",
-    "title": "Maharashtra Student Credit Card",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹450000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1242",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹250000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1250",
-    "title": "Maharashtra Student Credit Card",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1282",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1295",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹450000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1334",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1335",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹800000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1382",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1391",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1416",
-    "title": "Maharashtra Merit Scholarship",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1469",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1471",
-    "title": "Maharashtra Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1477",
-    "title": "Maharashtra Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "MH-BIZ-01",
+    title: "Chief Minister Employment Generation Programme (CMEGP)",
+    category: "business",
+    benefit: "15% to 35% Subsidy on loans up to ₹50 Lakh",
+    eligibility: ["Age 18-45", "New Entrepreneurs", "Class 7/10 passed based on loan amt"],
+    docs: ["Aadhaar Card", "Project Report", "Caste Certificate", "Academic Docs"],
+    reqs: { format: "PDF", size: "2mb" }
   }
 ];

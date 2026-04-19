@@ -205,9 +205,12 @@ export function SchemeDetails() {
                   {isActiveUpload && (
                     <div className="mt-6 pt-6 border-t border-white/10">
                       <SmartStepper 
-                        requirementDetails={`${t.schemeDetails.convert1} ${scheme.reqs.format} ${t.schemeDetails.convert2}${scheme.reqs.size} ${t.schemeDetails.convert3}`} 
+                        requirementDetails={`${t.schemeDetails.convert1} ${scheme.reqs.format}. (${scheme.reqs.size} ${t.schemeDetails.convert3})`} 
                         reqId={reqId}
                         onSuccess={() => setActiveDocIndex(null)}
+                        schemeName={schemeTitle}
+                        schemeId={scheme.id}
+                        schemeReqs={scheme.reqs}
                       />
                     </div>
                   )}

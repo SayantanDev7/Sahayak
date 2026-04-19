@@ -1,502 +1,87 @@
 export const westBengalSchemes = [
+  // --- EDUCATION ---
   {
-    "id": "SCH-1003",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-EDU-01",
+    title: "Kanyashree Prakalpa (K2)",
+    category: "education",
+    benefit: "₹25,000 One-time Grant",
+    eligibility: ["Unmarried Girl (18-19)", "Enrolled in Education", "Family Income < ₹1.2 LPA"],
+    docs: ["Aadhaar Card", "Birth Certificate", "Enrolment Proof"],
+    reqs: { format: "PDF", size: "400kb" }
   },
   {
-    "id": "SCH-1012",
-    "title": "West Bengal Merit Scholarship",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-EDU-02",
+    title: "Aikyashree Scholarship",
+    category: "education",
+    benefit: "₹1,100 to ₹33,000 per year",
+    eligibility: ["Minority Students", "West Bengal Resident", "Min 50% marks"],
+    docs: ["Aadhaar Card", "Income Certificate", "Caste Certificate", "Marksheet"],
+    reqs: { format: "PDF", size: "300kb" }
   },
+
+  // --- HEALTH ---
   {
-    "id": "SCH-1029",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-HLTH-01",
+    title: "Swasthya Sathi",
+    category: "health",
+    benefit: "₹5 Lakh health cover per family",
+    eligibility: ["All WB Families", "Smart card based", "Cashless treatment"],
+    docs: ["Aadhaar Card", "Ration Card", "Family Photo"],
+    reqs: { format: "JPG", size: "500kb" }
   },
+
+  // --- WOMEN ---
   {
-    "id": "SCH-1045",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹450000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-WOM-01",
+    title: "Lakshmir Bhandar",
+    category: "women",
+    benefit: "₹1,000 to ₹1,200 monthly",
+    eligibility: ["Women aged 25-60", "General/SC/ST categories", "Resident of WB"],
+    docs: ["Swasthya Sathi Card", "Aadhaar Card", "Caste Certificate", "Bank Passbook"],
+    reqs: { format: "PDF", size: "500kb" }
   },
+
+  // --- AGRICULTURE ---
   {
-    "id": "SCH-1049",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-AGRI-01",
+    title: "Krishak Bandhu (Death Benefit)",
+    category: "agriculture",
+    benefit: "₹2 Lakh for farmers family",
+    eligibility: ["Farmer/Laborer aged 18-60", "Valid Land Record holder", "Resident of WB"],
+    docs: ["Aadhaar Card", "Voter ID", "Land documents", "Death Certificate"],
+    reqs: { format: "PDF", size: "1mb" }
   },
+
+  // --- SOCIAL ---
   {
-    "id": "SCH-1101",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-SOC-01",
+    title: "Lokkhir Bhandar (Social)",
+    category: "social",
+    benefit: "Financial assistance for women",
+    eligibility: ["Women (25-60 years)", "General/SC/ST", "West Bengal residence"],
+    docs: ["Aadhaar Card", "Ration Card", "Caste Certificate"],
+    reqs: { format: "PDF", size: "300kb" }
   },
+
+  // --- BUSINESS ---
   {
-    "id": "SCH-1103",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-BIZ-01",
+    title: "Shilpa Sathi",
+    category: "business",
+    benefit: "Single window clearance for businesses",
+    eligibility: ["MSMEs", "New Startups", "Traders"],
+    docs: ["Trade License", "PAN Card", "Aadhaar Card"],
+    reqs: { format: "PDF", size: "1mb" }
   },
+
+  // --- EMPLOYMENT ---
   {
-    "id": "SCH-1108",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹250000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1129",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: No limit",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1162",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹250000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1185",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1226",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1239",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹800000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1240",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹800000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1246",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1247",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1249",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹800000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1252",
-    "title": "West Bengal Merit Scholarship",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1299",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: No limit",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1306",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: No limit",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1432",
-    "title": "West Bengal Student Credit Card",
-    "benefit": "₹10,000",
-    "eligibility": [
-      "Target Group: Merit",
-      "Income Cap: ₹450000",
-      "Min. Marks: 60%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1444",
-    "title": "West Bengal Fee Waiver Scheme",
-    "benefit": "₹50,000",
-    "eligibility": [
-      "Target Group: Women",
-      "Income Cap: ₹250000",
-      "Min. Marks: 75%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1466",
-    "title": "West Bengal Merit Scholarship",
-    "benefit": "₹10,00,000",
-    "eligibility": [
-      "Target Group: SC/ST",
-      "Income Cap: ₹450000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1488",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹25,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹800000",
-      "Min. Marks: 85%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
-  },
-  {
-    "id": "SCH-1495",
-    "title": "West Bengal Higher Ed Stipend",
-    "benefit": "₹1,00,000",
-    "eligibility": [
-      "Target Group: General",
-      "Income Cap: ₹250000",
-      "Min. Marks: 50%"
-    ],
-    "docs": [
-      "Aadhaar Card",
-      "Bank Passbook",
-      "Income Certificate",
-      "Marksheet"
-    ],
-    "reqs": {
-      "format": "PDF",
-      "size": "500kb"
-    }
+    id: "WB-EMP-01",
+    title: "Yuvasree Scheme",
+    category: "employment",
+    benefit: "₹1,500 monthly unemployment assistance",
+    eligibility: ["Enrolled in Employment Bank", "Class 8 pass", "Age 18-45"],
+    docs: ["Aadhaar Card", "Employment Bank Cert", "Qualification docs"],
+    reqs: { format: "PDF", size: "500kb" }
   }
 ];

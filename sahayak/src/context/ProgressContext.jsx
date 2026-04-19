@@ -66,6 +66,25 @@ export function ProgressProvider({ children }) {
     });
   };
 
+  const resetDocument = (reqId) => {
+    setProgressData((prev) => {
+      if (!prev) return prev;
+      const updatedDocs = prev.documents.map((doc) =>
+        doc.id === reqId ? { ...doc, status: 'pending', file: null, rejectionReason: null } : doc
+      );
+
+      const completed = updatedDocs.filter((d) => d.status === 'uploaded').length;
+      const total = updatedDocs.length;
+      const newProgress = Math.round((completed / total) * 100);
+
+      return {
+        ...prev,
+        progress: newProgress,
+        documents: updatedDocs
+      };
+    });
+  };
+
   const startApplication = (scheme) => {
     const initialDocs = scheme.requirements.map(req => ({
       id: req.id,
@@ -94,6 +113,7 @@ export function ProgressProvider({ children }) {
       progressData,
       uploadDocument,
       markDocRejected,
+      resetDocument,
       startApplication,
       getFirstIncompleteDocIndex
     }}>
